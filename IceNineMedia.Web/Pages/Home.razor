@@ -1,0 +1,27 @@
+﻿@page "/"
+@using IceNineMedia.Core.Features.Home
+@using IceNineMedia.Core.Features.Shared
+@using IceNineMedia.Core.Features.Shared.Abstractions
+
+@inject IUmbracoHelperService UmbracoHelperService
+@inject IHttpContextAccessor ContextAccessor
+
+@code {
+    private HomeViewModel? homePage = null;
+
+    protected override void OnInitialized()
+    {
+        var slug = ContextAccessor?.HttpContext?.Request.Path.Value;
+        // For whatever reason, Blazor loads components twice
+        // Wait until the second time to load the page content
+        if (!string.IsNullOrEmpty(slug) && slug.Equals("/_blazor")) 
+        {
+            homePage = UmbracoHelperService.GetHomeContent("/");
+        }
+    }
+}
+
+@if (!string.IsNullOrEmpty(homePage?.PageTitle))
+{
+    <h1>@homePage.PageTitle</h1>
+}

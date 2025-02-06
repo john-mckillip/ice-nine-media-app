@@ -1,0 +1,39 @@
+﻿@inherits LayoutComponentBase
+
+<div class="main-layout">
+    <header>
+        <h1>Ice Nine Media</h1>
+    </header>
+
+    <main>
+        @Body
+    </main>
+
+    <footer>
+        <p>&copy; @DateTime.UtcNow.Year</p>
+    </footer>
+</div>
+
+<style>
+    .main-layout {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    header {
+        background-color: #0078d4;
+        color: white;
+        padding: 1rem;
+    }
+
+    footer {
+        background-color: #f1f1f1;
+        text-align: center;
+        padding: 1rem;
+    }
+
+    main {
+        padding: 2rem;
+    }
+</style>

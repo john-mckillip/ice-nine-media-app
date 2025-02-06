@@ -1,0 +1,35 @@
+﻿@page "/blazor"
+@namespace IceNineMedia.Web.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Umbraco.TagHelpers
+@using IceNineMedia.Core.Features.Shared.Abstractions
+@using IceNineMedia.Core.Features.Shared.Models
+@using Microsoft.AspNetCore.Http
+@inject IUmbracoHelperService UmbracoHelperService
+@inject IHttpContextAccessor ContextAccessor
+
+@functions {
+    public PageMetadata PageMetadata { get; set; } = new PageMetadata();
+}
+
+@{
+    PageMetadata = UmbracoHelperService.GetPageMetadata(ContextAccessor?.HttpContext?.Request.Path.Value) ?? new PageMetadata();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="css/output.css" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@PageMetadata.MetaTitle</title>
+    <meta name="description" content="@PageMetadata.MetaDescription" />
+    <meta name="author" content="@PageMetadata.MetaAuthor" />
+</head>
+<body>
+    <app>
+        <component type="typeof(IceNineMedia.Web.App)" render-mode="ServerPrerendered" />
+    </app>
+    <script src="_framework/blazor.server.js"></script>
+</body>
+</html>
