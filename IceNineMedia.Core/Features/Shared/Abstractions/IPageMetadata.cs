@@ -11,6 +11,16 @@
         string BrowserTitle { get; }
 
         /// <summary>
+        /// The search engine friendly url of the page
+        /// </summary>
+        string CanonicalUrl { get; }
+
+        /// <summary>
+        /// Whether or not the page should show up in search engines
+        /// </summary>
+        bool DisableSearchIndexing { get; }
+
+        /// <summary>
         /// The author of the content page being displayed
         /// </summary>
         string MetaAuthor { get; }

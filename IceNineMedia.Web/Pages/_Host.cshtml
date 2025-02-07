@@ -13,7 +13,7 @@
 }
 
 @{
-    PageMetadata = UmbracoHelperService.GetPageMetadata(ContextAccessor?.HttpContext?.Request.Path.Value) ?? new PageMetadata();
+    PageMetadata = UmbracoHelperService.GetContentMetadata(ContextAccessor?.HttpContext?.Request.Path.Value) ?? new PageMetadata();
 }
 
 <!DOCTYPE html>
@@ -25,6 +25,11 @@
     <title>@PageMetadata.MetaTitle</title>
     <meta name="description" content="@PageMetadata.MetaDescription" />
     <meta name="author" content="@PageMetadata.MetaAuthor" />
+    @if (PageMetadata.DisableSearchIndexing) 
+    {
+        <meta name="robots" content="noindex, nofollow, noarchive">
+    }
+    <link href="@PageMetadata.CanonicalUrl" rel="canonical" />
 </head>
 <body>
     <app>

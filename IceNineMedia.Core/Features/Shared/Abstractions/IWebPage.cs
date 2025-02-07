@@ -1,4 +1,6 @@
-﻿namespace IceNineMedia.Core.Features.Shared.Abstractions
+﻿using System.Web;
+
+namespace IceNineMedia.Core.Features.Shared.Abstractions
 {
     /// <summary>
     /// The base properties that all pages should have
@@ -6,28 +8,20 @@
     public interface IWebPage : IPageMetadata
     {
         /// <summary>
-        /// The search engine friendly url of the page
+        /// Hides page from the navigation
         /// </summary>
-        string CanonicalUrl { get; }
-
+        public bool HideFromNavigation { get; set; }
         /// <summary>
         /// Hides page from the sitemap
         /// </summary>
         bool HideFromSitemap { get; }
-
-        /// <summary>
-        /// Whether or not the page should show up in search engines
-        /// </summary>
-        bool DisableSearchIndexing { get; }
-
         /// <summary>
         /// The title of the page
         /// </summary>
-        string PageTitle { get; }
-
+        string Title { get; }
         /// <summary>
-        /// The left part of the site url used in the wrapping shared layouts
+        /// The main body of content for the page
         /// </summary>
-        string SitePath { get; }
+        public IHtmlString? MainBody { get; set; }
     }
 }

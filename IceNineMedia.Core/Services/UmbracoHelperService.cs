@@ -17,19 +17,19 @@ namespace IceNineMedia.Core.Services
 
         public AboutViewModel? GetAboutContent(string? slug)
         {
-            var aboutContent = GetPageContent(slug);
+            var aboutContent = GetContent(slug);
 
             return _umbracoMapper.MapAboutViewModel(aboutContent);
         }
 
         public HomeViewModel? GetHomeContent(string? slug)
         {
-            var homeContent = GetPageContent(slug);
+            var homeContent = GetContent(slug);
 
             return _umbracoMapper.MapHomeViewModel(homeContent);
         }
 
-        public IPublishedContent? GetPageContent(string? slug)
+        public IPublishedContent? GetContent(string? slug)
         {          
             if (!string.IsNullOrEmpty(slug))
             {
@@ -47,9 +47,9 @@ namespace IceNineMedia.Core.Services
             return null;
         }
 
-        public PageMetadata? GetPageMetadata(string? slug)
+        public PageMetadata? GetContentMetadata(string? slug)
         {
-            var pageContent = GetPageContent(slug);
+            var pageContent = GetContent(slug);
 
             return _umbracoMapper.MapPageMetadata(pageContent);
         }

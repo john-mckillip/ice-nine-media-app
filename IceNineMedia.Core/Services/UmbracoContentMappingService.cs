@@ -14,12 +14,11 @@ namespace IceNineMedia.Core.Services
 
         public AboutViewModel MapAboutViewModel(IPublishedContent? content)
         {
-            AboutViewModel aboutViewModel = new() { SitePath = _getRequestDomain() };
+            AboutViewModel aboutViewModel = new();
 
             if (content is not null)
             {
-                aboutViewModel.PageTitle = content?.Name ?? string.Empty;
-                aboutViewModel.BrowserTitle = content?.Value<string>("browserTitle") ?? string.Empty;
+                aboutViewModel.Title = content?.Value<string>("title") ?? content?.Name() ?? string.Empty;
             }
 
             return aboutViewModel;
@@ -27,12 +26,11 @@ namespace IceNineMedia.Core.Services
 
         public HomeViewModel MapHomeViewModel(IPublishedContent? content)
         {
-            HomeViewModel homeViewModel = new() { SitePath = _getRequestDomain() };
+            HomeViewModel homeViewModel = new();
 
             if (content is not null)
             {
-                homeViewModel.PageTitle = content?.Name ?? string.Empty;
-                homeViewModel.BrowserTitle = content?.Value<string>("browserTitle") ?? string.Empty;
+                homeViewModel.Title = content?.Value<string>("title") ?? content?.Name() ?? string.Empty;
             }
 
             return homeViewModel;
@@ -44,7 +42,9 @@ namespace IceNineMedia.Core.Services
 
             if (content is not null)
             {
+                pageMetadata.CanonicalUrl = $"{_getRequestDomain()}{content?.Url() ?? string.Empty}";
                 pageMetadata.BrowserTitle = content?.Value<string>("browserTitle") ?? string.Empty;
+                pageMetadata.DisableSearchIndexing = content?.Value<bool>("disableSearchIndexing") ?? false;
                 pageMetadata.MetaAuthor = content?.Value<string>("metaAuthor") ?? string.Empty;
                 pageMetadata.MetaDescription = content?.Value<string>("metaDescription") ?? string.Empty;   
             }

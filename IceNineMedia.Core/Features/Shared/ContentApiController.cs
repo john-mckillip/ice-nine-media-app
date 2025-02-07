@@ -54,7 +54,7 @@ namespace IceNineMedia.Core.Features.Shared
 
             if (content is not null)
             {
-                aboutViewModel.PageTitle = content?.Name ?? string.Empty;
+                aboutViewModel.Title = content?.Name ?? string.Empty;
                 aboutViewModel.BrowserTitle = content?.Value<string>("browserTitle") ?? string.Empty;
             }
 
@@ -67,7 +67,7 @@ namespace IceNineMedia.Core.Features.Shared
 
             if (content is not null)
             {
-                homeViewModel.PageTitle = content?.Name ?? string.Empty;
+                homeViewModel.Title = content?.Name ?? string.Empty;
                 homeViewModel.BrowserTitle = content?.Value<string>("browserTitle") ?? string.Empty;
             }
 

@@ -4,13 +4,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{77818A98-562F-4841-8A48-A88B165F75AA}"
-	ProjectSection(SolutionItems) = preProject
-		README.md = README.md
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IceNineMedia.Web", "IceNineMedia.Web\IceNineMedia.Web.csproj", "{F5BB7809-DCF8-4369-8275-AADEE1770FC2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IceNineMedia.Core", "IceNineMedia.Core\IceNineMedia.Core.csproj", "{A1286C8B-5B8D-484F-A817-C95698D3158A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IceNineMedia.Tests", "..\IceNineMedia.Tests\IceNineMedia.Tests.csproj", "{CF7E0508-B7A3-44B9-A13B-105A64185445}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +25,10 @@ Global
 		{A1286C8B-5B8D-484F-A817-C95698D3158A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1286C8B-5B8D-484F-A817-C95698D3158A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1286C8B-5B8D-484F-A817-C95698D3158A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF7E0508-B7A3-44B9-A13B-105A64185445}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF7E0508-B7A3-44B9-A13B-105A64185445}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF7E0508-B7A3-44B9-A13B-105A64185445}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF7E0508-B7A3-44B9-A13B-105A64185445}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -17,22 +17,22 @@ namespace IceNineMedia.Core.Features.Shared.Abstractions
         /// <returns></returns>
         AboutViewModel? GetAboutContent(string? slug);
         /// <summary>
-        /// Get the content from Umbraco for the home page
+        /// Gets the content from Umbraco for the home page
         /// </summary>
         /// <param name="slug"></param>
         /// <returns></returns>
         HomeViewModel? GetHomeContent(string? slug);
         /// <summary>
-        /// Get the content from Umbraco for a page
+        /// Gets the content from Umbraco for a page
         /// </summary>
         /// <param name="slug"></param>
         /// <returns></returns>
-        IPublishedContent? GetPageContent(string? slug);
+        IPublishedContent? GetContent(string? slug);
         /// <summary>
-        /// Get the metadata content from Umbraco for a page
+        /// Gets the content metadata from Umbraco for a page
         /// </summary>
         /// <param name="slug"></param>
         /// <returns></returns>
-        PageMetadata? GetPageMetadata(string? slug);
+        PageMetadata? GetContentMetadata(string? slug);
     }
 }
