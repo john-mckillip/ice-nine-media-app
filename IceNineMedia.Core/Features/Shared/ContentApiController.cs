@@ -50,7 +50,7 @@ namespace IceNineMedia.Core.Features.Shared
 
         private AboutViewModel _mapAboutViewModel(IPublishedContent? content)
         {
-            AboutViewModel aboutViewModel = new() { SitePath = _getRequestDomain() };
+            AboutViewModel aboutViewModel = new();
 
             if (content is not null)
             {
@@ -63,7 +63,7 @@ namespace IceNineMedia.Core.Features.Shared
 
         private HomeViewModel _mapHomeViewModel(IPublishedContent? content)
         {
-            HomeViewModel homeViewModel = new() { SitePath = _getRequestDomain() };
+            HomeViewModel homeViewModel = new();
 
             if (content is not null)
             {

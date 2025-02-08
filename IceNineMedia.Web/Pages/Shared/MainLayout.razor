@@ -1,8 +1,21 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="main-layout">
-    <header>
-        <h1>Ice Nine Media</h1>
+<div class="main-layout px-8 md:px-16 py-4 md:py-8">
+    <header class="grid grid-cols-1 md:grid-cols-5 gap-1 p-1 items-center">
+        <div class="col-span-1">
+            <p>Based in <br> Batavia, Illinois</p>
+        </div>
+        <div class="col-span-1 flex items-center justify-center md:justify-end">
+            <a rel="noopener noreferrer" target="_blank" aria-label="Say hello john0mckillip@gmail.com" class="text-white" href="mailto:john0mckillip@gmail.com">
+                Say hello <br><div class="underline underline-offset-12">john0mckillip@gmail.com</div>
+            </a>
+        </div>
+        <nav class="col-span-3 flex justify-center md:justify-end space-x-4">
+            <a href="#about" class="text-white">About</a>
+            <a href="#experience" class="text-white">Experience</a>
+            <a href="#tech" class="text-white">Tech</a>
+            <a href="#contact" class="text-white">Contact</a>
+        </nav>
     </header>
 
     <main>
@@ -13,27 +26,3 @@
         <p>&copy; @DateTime.UtcNow.Year</p>
     </footer>
 </div>
-
-<style>
-    .main-layout {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-    }
-
-    header {
-        background-color: #0078d4;
-        color: white;
-        padding: 1rem;
-    }
-
-    footer {
-        background-color: #f1f1f1;
-        text-align: center;
-        padding: 1rem;
-    }
-
-    main {
-        padding: 2rem;
-    }
-</style>
