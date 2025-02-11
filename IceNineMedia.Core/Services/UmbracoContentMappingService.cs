@@ -1,8 +1,10 @@
 ﻿using IceNineMedia.Core.Features.About;
 using IceNineMedia.Core.Features.Home;
+using IceNineMedia.Core.Features.Settings;
 using IceNineMedia.Core.Features.Shared.Abstractions;
 using IceNineMedia.Core.Features.Shared.Models;
 using Microsoft.AspNetCore.Http;
+using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Extensions;
 
@@ -50,6 +52,19 @@ namespace IceNineMedia.Core.Services
             }
 
             return pageMetadata;
+        }
+
+        public SiteSettingsViewModel MapSiteSettingsViewModel(IPublishedContent? content)
+        {
+            SiteSettingsViewModel siteSettingsViewModel = new();
+            if (content is not null)
+            {
+                siteSettingsViewModel.ContactEmail = content?.Value<string>("contactEmail") ?? string.Empty;
+                siteSettingsViewModel.IntroText = content?.Value<string>("introText") ?? null;
+                siteSettingsViewModel.Navigation = content?.Value<IEnumerable<Link>>("navigation") ?? [];
+            }
+
+            return siteSettingsViewModel;
         }
 
         protected string _getRequestDomain()

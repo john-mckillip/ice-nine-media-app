@@ -8,3 +8,4 @@
 /.vs/IceNineMediaApp
 /.vs/ProjectEvaluation
 /IceNineMedia.Tests/obj
+/IceNineMedia.Tests/bin/Debug/net9.0

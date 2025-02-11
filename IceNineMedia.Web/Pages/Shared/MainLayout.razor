@@ -1,21 +1,50 @@
-﻿@inherits LayoutComponentBase
+﻿@using IceNineMedia.Core.Features.Settings
+@using IceNineMedia.Core.Features.Shared.Abstractions
+@inherits LayoutComponentBase
+@inject IUmbracoHelperService UmbracoHelperService
+@using Microsoft.AspNetCore.Components
+
+@code {
+    private SiteSettingsViewModel? siteSettings;
+    private MarkupString? introText;
+    private string? contactEmail;
+
+    protected override void OnInitialized()
+    {
+        siteSettings = UmbracoHelperService.GetSiteSettings();
+        if (siteSettings is not null)
+        {
+            introText = new MarkupString(siteSettings.IntroText ?? string.Empty);
+            contactEmail = siteSettings.ContactEmail;
+        }
+    }
+}
 
 <div class="main-layout px-8 md:px-16 py-4 md:py-8">
     <header class="grid grid-cols-1 md:grid-cols-5 gap-1 p-1 items-center">
-        <div class="col-span-1">
-            <p>Based in <br> Batavia, Illinois</p>
-        </div>
-        <div class="col-span-1 flex items-center justify-center md:justify-end">
-            <a rel="noopener noreferrer" target="_blank" aria-label="Say hello john0mckillip@gmail.com" class="text-white" href="mailto:john0mckillip@gmail.com">
-                Say hello <br><div class="underline underline-offset-12">john0mckillip@gmail.com</div>
-            </a>
-        </div>
-        <nav class="col-span-3 flex justify-center md:justify-end space-x-4">
-            <a href="#about" class="text-white">About</a>
-            <a href="#experience" class="text-white">Experience</a>
-            <a href="#tech" class="text-white">Tech</a>
-            <a href="#contact" class="text-white">Contact</a>
-        </nav>
+        @if (introText.HasValue)
+        {
+            <div class="col-span-1">
+                @introText
+            </div>
+        }
+        @if (!string.IsNullOrEmpty(contactEmail))
+        {
+            <div class="col-span-1 flex items-center justify-center md:justify-end">
+                <a rel="noopener noreferrer" target="_blank" aria-label="Say hello @contactEmail" class="text-white" href="mailto:@contactEmail">
+                    Say hello <br><div class="underline underline-offset-12">@contactEmail</div>
+                </a>
+            </div>
+        }
+        @if (siteSettings?.Navigation?.Any() == true)
+        {
+            <nav class="col-span-3 flex justify-center md:justify-end space-x-4">
+                @foreach (var navItem in siteSettings.Navigation)
+                {
+                    <a target="@navItem.Target" href="@navItem.Url" class="text-white">@navItem.Name</a>
+                }
+            </nav>
+        }
     </header>
 
     <main>

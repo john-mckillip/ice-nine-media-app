@@ -1,5 +1,6 @@
 ﻿using IceNineMedia.Core.Features.About;
 using IceNineMedia.Core.Features.Home;
+using IceNineMedia.Core.Features.Settings;
 using IceNineMedia.Core.Features.Shared.Models;
 using Umbraco.Cms.Core.Models.PublishedContent;
 
@@ -9,6 +10,7 @@ namespace IceNineMedia.Core.Features.Shared.Abstractions
     {
         HomeViewModel MapHomeViewModel(IPublishedContent? content);
         AboutViewModel MapAboutViewModel(IPublishedContent? content);
+        SiteSettingsViewModel MapSiteSettingsViewModel(IPublishedContent? content);
         PageMetadata MapPageMetadata(IPublishedContent? content);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using IceNineMedia.Core.Features.About;
 using IceNineMedia.Core.Features.Home;
+using IceNineMedia.Core.Features.Settings;
 using IceNineMedia.Core.Features.Shared.Abstractions;
 using IceNineMedia.Core.Features.Shared.Models;
 using Umbraco.Cms.Core;
@@ -52,6 +53,16 @@ namespace IceNineMedia.Core.Services
             var pageContent = GetContent(slug);
 
             return _umbracoMapper.MapPageMetadata(pageContent);
+        }
+
+        public SiteSettingsViewModel? GetSiteSettings()
+        {
+            var siteSettingsContent = _publishedContentQuery
+                .ContentAtRoot()?
+                .SelectMany(x => x.DescendantsOrSelf())
+                .FirstOrDefault(x => x.ContentType.Alias == "siteSettings");
+
+            return _umbracoMapper.MapSiteSettingsViewModel(siteSettingsContent);
         }
     }
 }
