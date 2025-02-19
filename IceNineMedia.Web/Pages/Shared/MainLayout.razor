@@ -1,27 +1,37 @@
-﻿@using IceNineMedia.Core.Features.Settings
-@using IceNineMedia.Core.Features.Shared.Abstractions
-@inherits LayoutComponentBase
-@inject IUmbracoHelperService UmbracoHelperService
-@using Microsoft.AspNetCore.Components
+﻿@inherits LayoutComponentBase
 
 @code {
     private SiteSettingsViewModel? siteSettings;
     private MarkupString? introText;
     private string? contactEmail;
+    private bool isMenuOpen = false;
+    private bool isInitialized = false;
 
-    protected override void OnInitialized()
+    protected override void OnAfterRender(bool firstRender)
     {
-        siteSettings = UmbracoHelperService.GetSiteSettings();
-        if (siteSettings is not null)
+        if (firstRender)
         {
-            introText = new MarkupString(siteSettings.IntroText ?? string.Empty);
-            contactEmail = siteSettings.ContactEmail;
+            siteSettings = UmbracoHelperService.GetSiteSettings();
+            if (siteSettings is not null)
+            {
+                introText = new MarkupString(siteSettings.IntroText ?? string.Empty);
+                contactEmail = siteSettings.ContactEmail;
+            }
+            isInitialized = true;
+            StateHasChanged();
         }
+    }
+
+    public async Task ToggleMenu()
+    {
+        isMenuOpen = !isMenuOpen;
+        await JSRuntime.InvokeVoidAsync("console.log", $"Menu is now {(isMenuOpen ? "open" : "closed")}");
+        StateHasChanged();
     }
 }
 
 <div class="main-layout px-8 md:px-16 py-4 md:py-8">
-    <header class="grid grid-cols-1 md:grid-cols-5 gap-1 p-1 items-center">
+    <header class="grid grid-cols-1 md:grid-cols-5 gap-1 p-1 items-center relative">
         @if (introText.HasValue)
         {
             <div class="col-span-1">
@@ -30,15 +40,22 @@
         }
         @if (!string.IsNullOrEmpty(contactEmail))
         {
-            <div class="col-span-1 flex items-center justify-center md:justify-end">
+            <div class="col-span-1 hidden md:flex items-center justify-center md:justify-end">
                 <a rel="noopener noreferrer" target="_blank" aria-label="Say hello @contactEmail" class="text-white" href="mailto:@contactEmail">
                     Say hello <br><div class="underline underline-offset-12">@contactEmail</div>
                 </a>
             </div>
         }
+        <div class="absolute top-0 right-0 p-4 md:hidden">
+            <button @onclick="ToggleMenu" class="text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+        </div>
         @if (siteSettings?.Navigation?.Any() == true)
         {
-            <nav class="col-span-3 flex justify-center md:justify-end space-x-4">
+            <nav class="col-span-3 flex flex-col md:flex-row justify-center md:justify-end space-x-0 md:space-x-4 space-y-4 md:space-y-0 transition-transform transform md:transform-none @(isMenuOpen ? "block" : "hidden") md:flex">
                 @foreach (var navItem in siteSettings.Navigation)
                 {
                     <a target="@navItem.Target" href="@navItem.Url" class="text-white">@navItem.Name</a>
@@ -55,3 +72,4 @@
         <p>&copy; @DateTime.UtcNow.Year</p>
     </footer>
 </div>
+
