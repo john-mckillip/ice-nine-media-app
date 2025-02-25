@@ -8,15 +8,15 @@
 
 @code {
     private AboutViewModel? aboutPage = null;
+    private bool isInitialized = false;
 
-    protected override void OnInitialized()
+    protected override void OnAfterRender(bool firstRender)
     {
-        var slug = ContextAccessor?.HttpContext?.Request.Path.Value;
-        // For whatever reason, Blazor loads components twice
-        // Wait until the second time to load the page content
-        if (!string.IsNullOrEmpty(slug) && slug.Equals("/_blazor"))
+        if (firstRender && !isInitialized)
         {
             aboutPage = UmbracoHelperService.GetAboutContent("/about");
+            isInitialized = true;
+            StateHasChanged();
         }
     }
 }

@@ -8,20 +8,27 @@
 
 @code {
     private HomeViewModel? homePage = null;
+    private bool isInitialized = false;
+    private List<string> title = [];
 
-    protected override void OnInitialized()
+    protected override void OnAfterRender(bool firstRender)
     {
-        var slug = ContextAccessor?.HttpContext?.Request.Path.Value;
-        // For whatever reason, Blazor loads components twice
-        // Wait until the second time to load the page content
-        if (!string.IsNullOrEmpty(slug) && slug.Equals("/_blazor")) 
+        if (firstRender && !isInitialized)
         {
-            homePage = UmbracoHelperService.GetHomeContent("/");
+            homePage =  UmbracoHelperService.GetHomeContent("/");
+            if (!string.IsNullOrEmpty(homePage?.Title))
+            {
+                title = homePage.Title.Split(' ').ToList();
+            }
+            isInitialized = true;
+            StateHasChanged();
         }
     }
 }
 
-@if (!string.IsNullOrEmpty(homePage?.Title))
+@if (title.Any())
 {
-    <h1>@homePage.Title</h1>
+    <h1 class="full-width-header">
+        @title.First() <span class="last-name">@title.Last()</span>
+    </h1>
 }

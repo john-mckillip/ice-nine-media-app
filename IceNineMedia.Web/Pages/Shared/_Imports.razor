@@ -4,10 +4,15 @@
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components.Routing
 @using Microsoft.AspNetCore.Components.Web
+@using Microsoft.AspNetCore.Http
 @using Microsoft.JSInterop
 @using Microsoft.AspNetCore.Components
 @using IceNineMedia.Core.Features.Settings
 @using IceNineMedia.Core.Features.Shared.Abstractions
+@using IceNineMedia.Core.Features.Shared.Models
+@using IceNineMedia.Core.Features.Home
+@using IceNineMedia.Core.Features.Shared
 
 @inject IUmbracoHelperService UmbracoHelperService
 @inject IJSRuntime JSRuntime
+@inject IHttpContextAccessor ContextAccessor
