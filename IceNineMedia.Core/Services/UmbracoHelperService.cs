@@ -5,7 +5,6 @@ using IceNineMedia.Core.Features.Shared.Abstractions;
 using IceNineMedia.Core.Features.Shared.Models;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Models.PublishedContent;
-using Umbraco.Extensions;
 
 namespace IceNineMedia.Core.Services
 {

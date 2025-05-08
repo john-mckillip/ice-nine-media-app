@@ -29,7 +29,7 @@
     }
 }
 
-<div class="main-layout px-8 md:px-16 py-4 md:py-8">
+<div class="main-layout flex flex-col min-h-screen px-8 md:px-16 py-4 md:py-8">
     <header class="grid grid-cols-1 md:grid-cols-5 gap-1 p-1 items-center relative">
         @if (introText.HasValue)
         {
@@ -80,11 +80,12 @@
         }
     </header>
 
-    <main>
+    <main class="flex-grow">
         @Body
     </main>
 
-    <footer>
+    <footer class="sticky bottom-0 pt-4 text-white">
         <p>&copy; Ice Nine Media - John McKillip @DateTime.UtcNow.Year</p>
     </footer>
+
 </div>

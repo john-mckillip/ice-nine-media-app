@@ -28,7 +28,10 @@
 
 @if (title.Any())
 {
-    <h1 class="full-width-header">
-        @title.First() <span class="last-name">@title.Last()</span>
-    </h1>
+    <div class="home-name grid grid-cols-1 mb-8">
+        <h1 class="full-width-header">
+            @title.First() <span class="last-name">@title.Last()</span>
+        </h1>
+    </div>
+    
 }

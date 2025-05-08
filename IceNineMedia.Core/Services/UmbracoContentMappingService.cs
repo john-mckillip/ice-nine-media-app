@@ -6,7 +6,6 @@ using IceNineMedia.Core.Features.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.PublishedContent;
-using Umbraco.Extensions;
 
 namespace IceNineMedia.Core.Services
 {
