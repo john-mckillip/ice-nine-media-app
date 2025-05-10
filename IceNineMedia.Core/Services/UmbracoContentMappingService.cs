@@ -47,7 +47,7 @@ namespace IceNineMedia.Core.Services
                 pageMetadata.BrowserTitle = content?.Value<string>("browserTitle") ?? string.Empty;
                 pageMetadata.DisableSearchIndexing = content?.Value<bool>("disableSearchIndexing") ?? false;
                 pageMetadata.MetaAuthor = content?.Value<string>("metaAuthor") ?? string.Empty;
-                pageMetadata.MetaDescription = content?.Value<string>("metaDescription") ?? string.Empty;   
+                pageMetadata.MetaDescription = content?.Value<string>("metaDescription") ?? string.Empty;
             }
 
             return pageMetadata;
