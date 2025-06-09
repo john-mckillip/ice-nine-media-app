@@ -1,12 +1,14 @@
 using IceNineMedia.Core.Features.Shared.Abstractions;
 using IceNineMedia.Core.Services;
 using System.Net.Http.Headers;
+using UContentMapper.Umbraco15.Extensions;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllersWithViews();
+builder.Services.AddUContentMapper();
 builder.Services.AddScoped<IUmbracoHelperService, UmbracoHelperService>();
 builder.Services.AddScoped<IUmbracoMapper, UmbracoContentMappingService>();
 builder.CreateUmbracoBuilder()

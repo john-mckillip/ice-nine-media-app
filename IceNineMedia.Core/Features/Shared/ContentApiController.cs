@@ -2,6 +2,7 @@
 using IceNineMedia.Core.Features.Home;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using UContentMapper.Core.Abstractions.Mapping;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Models.PublishedContent;
 
@@ -11,10 +12,14 @@ namespace IceNineMedia.Core.Features.Shared
     [Route("api/content")]
     public class ContentApiController(
         IPublishedContentQuery contentQuery, 
-        IHttpContextAccessor httpContextAccessor) : ControllerBase
+        IHttpContextAccessor httpContextAccessor,
+        IContentMapper<HomeViewModel> homeMapper,
+        IContentMapper<AboutViewModel> aboutMapper) : ControllerBase
     {
         private readonly IPublishedContentQuery _contentQuery = contentQuery;
         private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
+        private readonly IContentMapper<HomeViewModel> _homeMapper = homeMapper;
+        private readonly IContentMapper<AboutViewModel> _aboutMapper = aboutMapper;
 
         [HttpGet("{slug}")]
         public IActionResult GetContent(string slug)
@@ -51,10 +56,9 @@ namespace IceNineMedia.Core.Features.Shared
         {
             AboutViewModel aboutViewModel = new();
 
-            if (content is not null)
+            if (content is not null && _aboutMapper.CanMap(content))
             {
-                aboutViewModel.Title = content?.Name ?? string.Empty;
-                aboutViewModel.BrowserTitle = content?.Value<string>("browserTitle") ?? string.Empty;
+                aboutViewModel = _aboutMapper.Map(content);
             }
 
             return aboutViewModel;
@@ -66,8 +70,10 @@ namespace IceNineMedia.Core.Features.Shared
 
             if (content is not null)
             {
-                homeViewModel.Title = content?.Name ?? string.Empty;
-                homeViewModel.BrowserTitle = content?.Value<string>("browserTitle") ?? string.Empty;
+                if (_homeMapper.CanMap(content))
+                {
+                    homeViewModel = _homeMapper.Map(content);
+                }
             }
 
             return homeViewModel;

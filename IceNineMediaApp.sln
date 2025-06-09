@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IceNineMedia.Core", "IceNin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IceNineMedia.Tests", "IceNineMedia.Tests\IceNineMedia.Tests.csproj", "{B505030B-F8DB-4BCD-85F7-9B8F08BA75EB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UContentMapper.Core", "..\UContentMapper\UContentMapper.Core\UContentMapper.Core.csproj", "{9E97A069-AAA5-F312-8EAB-E9BA2B9F0847}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UContentMapper.Umbraco15", "..\UContentMapper\UContentMapper.Umbraco15\UContentMapper.Umbraco15.csproj", "{147B153D-76F1-8509-B08E-27C986D5AA9F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,8 +33,19 @@ Global
 		{B505030B-F8DB-4BCD-85F7-9B8F08BA75EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B505030B-F8DB-4BCD-85F7-9B8F08BA75EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B505030B-F8DB-4BCD-85F7-9B8F08BA75EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E97A069-AAA5-F312-8EAB-E9BA2B9F0847}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E97A069-AAA5-F312-8EAB-E9BA2B9F0847}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E97A069-AAA5-F312-8EAB-E9BA2B9F0847}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E97A069-AAA5-F312-8EAB-E9BA2B9F0847}.Release|Any CPU.Build.0 = Release|Any CPU
+		{147B153D-76F1-8509-B08E-27C986D5AA9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{147B153D-76F1-8509-B08E-27C986D5AA9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{147B153D-76F1-8509-B08E-27C986D5AA9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{147B153D-76F1-8509-B08E-27C986D5AA9F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E9BE818C-1712-43AD-B5A9-5F38B904B389}
 	EndGlobalSection
 EndGlobal
