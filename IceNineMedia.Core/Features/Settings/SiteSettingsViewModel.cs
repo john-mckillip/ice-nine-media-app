@@ -2,10 +2,11 @@
 
 namespace IceNineMedia.Core.Features.Settings
 {
-    public class SiteSettingsViewModel
-    {
-        public string? IntroText { get; set; }
-        public string? ContactEmail { get; set; }
-        public IEnumerable<Link> Navigation { get; set; } = [];
-    }
+	public class SiteSettingsViewModel
+	{
+		public string? Copyright { get; set; }
+		public string? ContactEmail { get; set; }
+		public string? IntroText { get; set; }
+		public IEnumerable<Link> Navigation { get; set; } = [];
+	}
 }
