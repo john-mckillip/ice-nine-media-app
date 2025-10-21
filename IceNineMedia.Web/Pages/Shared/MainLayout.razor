@@ -1,13 +1,12 @@
 ﻿@inherits LayoutComponentBase
-
 @code {
-
     private SiteSettingsViewModel? siteSettings;
     private MarkupString? introText;
     private string? contactEmail;
     private string? copyrightText;
     private bool isMenuOpen = false;
     private bool isInitialized = false;
+    private bool navigationHasItems = false;
 
     protected override void OnAfterRender(bool firstRender)
     {
@@ -18,8 +17,8 @@
             {
                 introText = new MarkupString(siteSettings.IntroText ?? string.Empty);
                 contactEmail = siteSettings.ContactEmail;
-
                 copyrightText = siteSettings.Copyright ?? string.Empty;
+                navigationHasItems = siteSettings?.Navigation?.Any() ?? false;
             }
             isInitialized = true;
             StateHasChanged();
@@ -60,7 +59,7 @@
                 </span>
                 <span class="fixed top-0 right-0 z-40 h-full w-full translate-x-full overflow-y-auto overscroll-y-none transition duration-500 peer-checked:translate-x-0">
                     <span class="float-right min-h-full w-[85%] bg-white px-6 pt-12 shadow-2xl">
-                        @if (siteSettings?.Navigation?.Any() == true)
+                        @if (siteSettings is not null && navigationHasItems)
                         {
                             <MenuComponent Navigation="siteSettings.Navigation" OnCloseMenu="CloseMenu" />
                         }
@@ -68,7 +67,7 @@
                 </span>
             </label>
         </div>
-        @if (siteSettings?.Navigation?.Any() == true)
+        @if (siteSettings is not null && navigationHasItems)
         {
             <nav class="col-span-3 hidden md:flex flex-row justify-center md:justify-end space-x-4">
                 @foreach (var navItem in siteSettings.Navigation)
