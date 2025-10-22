@@ -78,7 +78,7 @@ namespace IceNineMedia.Core.Services
 			var siteSettingsContent = _publishedContentQuery
 				.ContentAtRoot()?
 				.SelectMany(x => x.DescendantsOrSelf())
-				.FirstOrDefault(x => x.ContentType.Alias == ContentAliases.SiteSettings);
+				.FirstOrDefault(x => x.ContentType.Alias == ContentTypeAliases.SiteSettings);
 
 			if (siteSettingsContent is not null && _siteSettingsMapper.CanMap(siteSettingsContent))
 			{

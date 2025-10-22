@@ -2,7 +2,7 @@
 {
 	public static class AppConstants
 	{
-		public static class ContentAliases
+		public static class ContentTypeAliases
 		{
 			public const string About = "about";
 			public const string Home = "home";
