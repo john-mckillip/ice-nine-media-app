@@ -56,12 +56,9 @@ namespace IceNineMedia.Core.Features.Shared
 		{
 			HomeViewModel homeViewModel = new();
 
-			if (content is not null)
+			if (content is not null && _homeMapper.CanMap(content))
 			{
-				if (_homeMapper.CanMap(content))
-				{
-					homeViewModel = _homeMapper.Map(content);
-				}
+				homeViewModel = _homeMapper.Map(content);
 			}
 
 			return homeViewModel;
