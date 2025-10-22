@@ -15,7 +15,7 @@
     {
         if (firstRender && !isInitialized)
         {
-            homePage =  UmbracoHelperService.GetHomeContent(Slugs.Home);
+            homePage =  UmbracoHelperService.GetHomeContent(ContentSlugs.Home);
             if (homePage is not null && !string.IsNullOrEmpty(homePage?.Title))
             {
                 title = homePage.Title.Split(' ').ToList();

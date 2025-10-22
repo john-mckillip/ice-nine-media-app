@@ -14,7 +14,7 @@
     {
         if (firstRender && !isInitialized)
         {
-            aboutPage = UmbracoHelperService.GetAboutContent(Slugs.About);
+            aboutPage = UmbracoHelperService.GetAboutContent(ContentSlugs.About);
             isInitialized = true;
             StateHasChanged();
         }

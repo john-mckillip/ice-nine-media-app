@@ -10,7 +10,7 @@
 			
 		}
 
-		public static class Slugs
+		public static class ContentSlugs
 		{
 			public const string About = "/about";
 			public const string Home = "/";
