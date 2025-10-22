@@ -1,0 +1,15 @@
+@using Umbraco.Cms.Core.Models
+@code {
+    [Parameter]
+    public IEnumerable<Link> Navigation { get; set; } = Enumerable.Empty<Link>();
+
+    [Parameter]
+    public EventCallback OnCloseMenu { get; set; }
+}
+
+<menu>
+    @foreach (var navItem in Navigation)
+    {
+        <li><a class="text-black" target="@navItem.Target" href="@navItem.Url" @onclick="OnCloseMenu">@navItem.Name</a></li>
+    }
+</menu>

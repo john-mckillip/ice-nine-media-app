@@ -2,77 +2,68 @@
 using IceNineMedia.Core.Features.Home;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using UContentMapper.Core.Abstractions.Mapping;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Models.PublishedContent;
 
 namespace IceNineMedia.Core.Features.Shared
 {
-    [ApiController]
-    [Route("api/content")]
-    public class ContentApiController(
-        IPublishedContentQuery contentQuery, 
-        IHttpContextAccessor httpContextAccessor) : ControllerBase
-    {
-        private readonly IPublishedContentQuery _contentQuery = contentQuery;
-        private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
+	[ApiController]
+	[Route("api/content")]
+	public class ContentApiController(
+		IPublishedContentQuery contentQuery,
+		IContentMapper<HomeViewModel> homeMapper,
+		IContentMapper<AboutViewModel> aboutMapper) : ControllerBase
+	{
+		private readonly IPublishedContentQuery _contentQuery = contentQuery;
+		private readonly IContentMapper<HomeViewModel> _homeMapper = homeMapper;
+		private readonly IContentMapper<AboutViewModel> _aboutMapper = aboutMapper;
 
-        [HttpGet("{slug}")]
-        public IActionResult GetContent(string slug)
-        {
-            var content = _contentQuery
-                .ContentAtRoot()?
-                .SelectMany(x => x.DescendantsOrSelf())
-                .FirstOrDefault(x => x.ContentType.Alias == slug);
+		[HttpGet("{slug}")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		public IActionResult GetContent(string slug)
+		{
+			var content = _contentQuery
+				.ContentAtRoot()?
+				.SelectMany(x => x.DescendantsOrSelf())
+				.FirstOrDefault(x => x.ContentType.Alias == slug);
 
-            if (content is null) return NotFound();
+			if (content is null) return NotFound();
 
-            return slug switch
-            {
-                "home" => Ok(_mapHomeViewModel(content)),  
-                "about" => Ok(_mapAboutViewModel(content)),
-                _ => Ok(),
-            };
-        }
+			return slug switch
+			{
+				"home" => Ok(_mapHomeViewModel(content)),
+				"about" => Ok(_mapAboutViewModel(content)),
+				_ => Ok(),
+			};
+		}
 
-        #region Helper Methods
+		#region Helper Methods
 
-        protected string _getRequestDomain()
-        {
-            var request = _httpContextAccessor?.HttpContext?.Request;
-            if (request is not null)
-            {
-                return $"{request.Scheme}://{request.Host}";
-            }
+		private AboutViewModel _mapAboutViewModel(IPublishedContent? content)
+		{
+			AboutViewModel aboutViewModel = new();
 
-            return string.Empty;
-        }
+			if (content is not null && _aboutMapper.CanMap(content))
+			{
+				aboutViewModel = _aboutMapper.Map(content);
+			}
 
-        private AboutViewModel _mapAboutViewModel(IPublishedContent? content)
-        {
-            AboutViewModel aboutViewModel = new();
+			return aboutViewModel;
+		}
 
-            if (content is not null)
-            {
-                aboutViewModel.Title = content?.Name ?? string.Empty;
-                aboutViewModel.BrowserTitle = content?.Value<string>("browserTitle") ?? string.Empty;
-            }
+		private HomeViewModel _mapHomeViewModel(IPublishedContent? content)
+		{
+			HomeViewModel homeViewModel = new();
 
-            return aboutViewModel;
-        }
+			if (content is not null && _homeMapper.CanMap(content))
+			{
+				homeViewModel = _homeMapper.Map(content);
+			}
 
-        private HomeViewModel _mapHomeViewModel(IPublishedContent? content)
-        {
-            HomeViewModel homeViewModel = new();
+			return homeViewModel;
+		}
 
-            if (content is not null)
-            {
-                homeViewModel.Title = content?.Name ?? string.Empty;
-                homeViewModel.BrowserTitle = content?.Value<string>("browserTitle") ?? string.Empty;
-            }
-
-            return homeViewModel;
-        }
-
-        #endregion
-    }
+		#endregion
+	}
 }

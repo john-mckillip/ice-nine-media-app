@@ -5,7 +5,7 @@ namespace IceNineMedia.Core.Features.Shared.Abstractions
     /// <summary>
     /// The base properties that all pages should have
     /// </summary>
-    public interface IWebPage : IPageMetadata
+    public interface IWebPage
     {
         /// <summary>
         /// Hides page from the navigation

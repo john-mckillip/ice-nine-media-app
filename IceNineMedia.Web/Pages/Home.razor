@@ -2,9 +2,9 @@
 @using IceNineMedia.Core.Features.Home
 @using IceNineMedia.Core.Features.Shared
 @using IceNineMedia.Core.Features.Shared.Abstractions
+@using static IceNineMedia.Core.Features.Shared.AppConstants
 
 @inject IUmbracoHelperService UmbracoHelperService
-@inject IHttpContextAccessor ContextAccessor
 
 @code {
     private HomeViewModel? homePage = null;
@@ -15,8 +15,8 @@
     {
         if (firstRender && !isInitialized)
         {
-            homePage =  UmbracoHelperService.GetHomeContent("/");
-            if (!string.IsNullOrEmpty(homePage?.Title))
+            homePage =  UmbracoHelperService.GetHomeContent(Slugs.Home);
+            if (homePage is not null && !string.IsNullOrEmpty(homePage?.Title))
             {
                 title = homePage.Title.Split(' ').ToList();
             }

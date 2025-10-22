@@ -13,4 +13,9 @@
     <PackageReference Include="Umbraco.Cms.Web.Common" Version="15.4.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\UContentMapper\UContentMapper.Core\UContentMapper.Core.csproj" />
+    <ProjectReference Include="..\..\UContentMapper\UContentMapper.Umbraco15\UContentMapper.Umbraco15.csproj" />
+  </ItemGroup>
+
 </Project>
