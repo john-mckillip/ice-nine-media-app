@@ -1,69 +1,83 @@
 ﻿using IceNineMedia.Core.Features.About;
 using IceNineMedia.Core.Features.Home;
-using Microsoft.AspNetCore.Http;
+using IceNineMedia.Core.Features.Settings;
 using Microsoft.AspNetCore.Mvc;
 using UContentMapper.Core.Abstractions.Mapping;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Models.PublishedContent;
+using static IceNineMedia.Core.Features.Shared.AppConstants;
 
 namespace IceNineMedia.Core.Features.Shared
 {
-	[ApiController]
-	[Route("api/content")]
-	public class ContentApiController(
-		IPublishedContentQuery contentQuery,
-		IContentMapper<HomeViewModel> homeMapper,
-		IContentMapper<AboutViewModel> aboutMapper) : ControllerBase
-	{
-		private readonly IPublishedContentQuery _contentQuery = contentQuery;
-		private readonly IContentMapper<HomeViewModel> _homeMapper = homeMapper;
-		private readonly IContentMapper<AboutViewModel> _aboutMapper = aboutMapper;
+    [ApiController]
+    [Route("api/content")]
+    public class ContentApiController(
+        IPublishedContentQuery contentQuery,
+        IContentMapper<HomeViewModel> homeMapper,
+        IContentMapper<AboutViewModel> aboutMapper,
+        IContentMapper<SiteSettingsViewModel> siteSettingsMapper) : ControllerBase
+    {
+        private readonly IPublishedContentQuery _contentQuery = contentQuery;
+        private readonly IContentMapper<HomeViewModel> _homeMapper = homeMapper;
+        private readonly IContentMapper<AboutViewModel> _aboutMapper = aboutMapper;
+        private readonly IContentMapper<SiteSettingsViewModel> _siteSettingsMapper = siteSettingsMapper;
 
-		[HttpGet("{slug}")]
-		[ProducesResponseType(StatusCodes.Status200OK)]
-		public IActionResult GetContent(string slug)
-		{
-			var content = _contentQuery
-				.ContentAtRoot()?
-				.SelectMany(x => x.DescendantsOrSelf())
-				.FirstOrDefault(x => x.ContentType.Alias == slug);
+        [HttpGet("{slug}")]
+        public IActionResult GetContent(string slug)
+        {
+            var content = _contentQuery
+                .ContentAtRoot()?
+                .SelectMany(x => x.DescendantsOrSelf())
+                .FirstOrDefault(x => x.ContentType.Alias == slug);
 
-			if (content is null) return NotFound();
+            if (content is null) return NotFound();
 
-			return slug switch
-			{
-				"home" => Ok(_mapHomeViewModel(content)),
-				"about" => Ok(_mapAboutViewModel(content)),
-				_ => Ok(),
-			};
-		}
+            return slug switch
+            {
+                ContentTypeAliases.About => Ok(_mapAboutViewModel(content)),
+                ContentTypeAliases.SiteSettings => Ok(_mapSiteSettingsViewModel(content)),
+                _ => Ok(_mapHomeViewModel(content)),
+            };
+        }
 
-		#region Helper Methods
+        #region Helper Methods
 
-		private AboutViewModel _mapAboutViewModel(IPublishedContent? content)
-		{
-			AboutViewModel aboutViewModel = new();
+        private AboutViewModel _mapAboutViewModel(IPublishedContent? content)
+        {
+            AboutViewModel aboutViewModel = new();
 
-			if (content is not null && _aboutMapper.CanMap(content))
-			{
-				aboutViewModel = _aboutMapper.Map(content);
-			}
+            if (content is not null && _aboutMapper.CanMap(content))
+            {
+                aboutViewModel = _aboutMapper.Map(content);
+            }
 
-			return aboutViewModel;
-		}
+            return aboutViewModel;
+        }
 
-		private HomeViewModel _mapHomeViewModel(IPublishedContent? content)
-		{
-			HomeViewModel homeViewModel = new();
+        private HomeViewModel _mapHomeViewModel(IPublishedContent? content)
+        {
+            HomeViewModel homeViewModel = new();
 
-			if (content is not null && _homeMapper.CanMap(content))
-			{
-				homeViewModel = _homeMapper.Map(content);
-			}
+            if (content is not null && _homeMapper.CanMap(content))
+            {
+                homeViewModel = _homeMapper.Map(content);
+            }
 
-			return homeViewModel;
-		}
+            return homeViewModel;
+        }
 
-		#endregion
-	}
+        private SiteSettingsViewModel _mapSiteSettingsViewModel(IPublishedContent? content)
+        {
+            SiteSettingsViewModel siteSettingsViewModel = new();
+
+            if (content is not null && _siteSettingsMapper.CanMap(content))
+            {
+                siteSettingsViewModel = _siteSettingsMapper.Map(content);
+            }
+
+            return siteSettingsViewModel;
+        }
+
+        #endregion
+    }
 }
