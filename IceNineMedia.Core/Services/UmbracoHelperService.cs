@@ -10,82 +10,89 @@ using static IceNineMedia.Core.Features.Shared.AppConstants;
 
 namespace IceNineMedia.Core.Services
 {
-	public class UmbracoHelperService(
-		IPublishedContentQuery publishedContentQuery,
-		IContentMapper<HomeViewModel> homeMapper,
-		IContentMapper<AboutViewModel> aboutMapper,
-		IContentMapper<PageMetadata> pageMetadataMapper,
-		IContentMapper<SiteSettingsViewModel> siteSettingsMapper) : IUmbracoHelperService
-	{
-		private readonly IPublishedContentQuery _publishedContentQuery = publishedContentQuery;
-		private readonly IContentMapper<HomeViewModel> _homeMapper = homeMapper;
-		private readonly IContentMapper<AboutViewModel> _aboutMapper = aboutMapper;
-		private readonly IContentMapper<PageMetadata> _pageMetadataMapper = pageMetadataMapper;
-		private readonly IContentMapper<SiteSettingsViewModel> _siteSettingsMapper = siteSettingsMapper;
+    public class UmbracoHelperService(
+        IPublishedContentQuery publishedContentQuery,
+        IContentMapperFactory contentMapperFactory) : IUmbracoHelperService
+    {
+        private readonly IPublishedContentQuery _publishedContentQuery = publishedContentQuery;
+        private readonly IContentMapperFactory _contentMapperFactory = contentMapperFactory;
 
-		public AboutViewModel? GetAboutContent(string? slug)
-		{
-			var aboutContent = GetContent(slug);
-			if (aboutContent is not null && _aboutMapper.CanMap(aboutContent))
-			{
-				return _aboutMapper.Map(aboutContent);
-			}
-			return null;
-		}
+        public AboutViewModel? GetAboutContent(string? slug)
+        {
+            var aboutContent = GetContent(slug);
 
-		public HomeViewModel? GetHomeContent(string? slug)
-		{
-			var homeContent = GetContent(slug);
-			if (homeContent is not null && _homeMapper.CanMap(homeContent))
-			{
-				return _homeMapper.Map(homeContent);
-			}
-			return null;
-		}
+            var aboutMapper = _contentMapperFactory.CreateMapper<AboutViewModel>();
 
-		public IPublishedContent? GetContent(string? slug)
-		{
-			if (!string.IsNullOrEmpty(slug))
-			{
-				if (!slug.Equals("/"))
-				{
-					slug = $"{slug}/";
-				}
+            if (aboutContent is not null && aboutMapper.CanMap(aboutContent))
+            {
+                return aboutMapper.Map(aboutContent);
+            }
 
-				return _publishedContentQuery
-					.ContentAtRoot()?
-					.SelectMany(x => x.DescendantsOrSelf())
-					.FirstOrDefault(x => x.Url() == slug);
-			}
+            return null;
+        }
 
-			return null;
-		}
+        public IPublishedContent? GetContent(string? slug)
+        {
+            if (!string.IsNullOrEmpty(slug))
+            {
+                if (!slug.Equals("/"))
+                {
+                    slug = $"{slug}/";
+                }
 
-		public PageMetadata? GetContentMetadata(string? slug)
-		{
-			var pageContent = GetContent(slug);
+                return _publishedContentQuery
+                    .ContentAtRoot()?
+                    .SelectMany(x => x.DescendantsOrSelf())
+                    .FirstOrDefault(x => x.Url() == slug);
+            }
 
-			if (pageContent is not null && _pageMetadataMapper.CanMap(pageContent))
-			{
-				return _pageMetadataMapper.Map(pageContent);
-			}
+            return null;
+        }
 
-			return null;
-		}
+        public PageMetadata? GetContentMetadata(string? slug)
+        {
+            var pageContent = GetContent(slug);
 
-		public SiteSettingsViewModel? GetSiteSettings()
-		{
-			var siteSettingsContent = _publishedContentQuery
-				.ContentAtRoot()?
-				.SelectMany(x => x.DescendantsOrSelf())
-				.FirstOrDefault(x => x.ContentType.Alias == ContentTypeAliases.SiteSettings);
+            var pageMetadataMapper = _contentMapperFactory.CreateMapper<PageMetadata>();
 
-			if (siteSettingsContent is not null && _siteSettingsMapper.CanMap(siteSettingsContent))
-			{
-				return _siteSettingsMapper.Map(siteSettingsContent);
-			}
+            if (pageContent is not null && pageMetadataMapper.CanMap(pageContent))
+            {
+                return pageMetadataMapper.Map(pageContent);
+            }
 
-			return null;
-		}
-	}
+            return null;
+        }
+
+        public HomeViewModel? GetHomeContent(string? slug)
+        {
+            var homeContent = GetContent(slug);
+
+            var homeMapper = _contentMapperFactory.CreateMapper<HomeViewModel>();
+
+            if (homeContent is not null && homeMapper.CanMap(homeContent))
+            {
+                return homeMapper.Map(homeContent);
+            }
+            return null;
+        }
+
+        public SiteSettingsViewModel? GetSiteSettings()
+        {
+            var siteSettingsContent = _publishedContentQuery
+                .ContentAtRoot()?
+                .SelectMany(x => x.DescendantsOrSelf())
+                .FirstOrDefault(x => x.ContentType.Alias == ContentTypeAliases.SiteSettings);
+
+            var siteSettingsMapper = _contentMapperFactory.CreateMapper<SiteSettingsViewModel>();
+
+            if (siteSettingsContent is not null && siteSettingsMapper.CanMap(siteSettingsContent))
+            {
+                var test = siteSettingsMapper.Map(siteSettingsContent);
+
+                return siteSettingsMapper.Map(siteSettingsContent);
+            }
+
+            return null;
+        }
+    }
 }

@@ -13,14 +13,10 @@ namespace IceNineMedia.Core.Features.Shared
     [Route("api/content")]
     public class ContentApiController(
         IPublishedContentQuery contentQuery,
-        IContentMapper<HomeViewModel> homeMapper,
-        IContentMapper<AboutViewModel> aboutMapper,
-        IContentMapper<SiteSettingsViewModel> siteSettingsMapper) : ControllerBase
+        IContentMapperFactory contentMapperFactory) : ControllerBase
     {
         private readonly IPublishedContentQuery _contentQuery = contentQuery;
-        private readonly IContentMapper<HomeViewModel> _homeMapper = homeMapper;
-        private readonly IContentMapper<AboutViewModel> _aboutMapper = aboutMapper;
-        private readonly IContentMapper<SiteSettingsViewModel> _siteSettingsMapper = siteSettingsMapper;
+        private readonly IContentMapperFactory _contentMapperFactory = contentMapperFactory;
 
         [HttpGet("{slug}")]
         public IActionResult GetContent(string slug)
@@ -46,9 +42,11 @@ namespace IceNineMedia.Core.Features.Shared
         {
             AboutViewModel aboutViewModel = new();
 
-            if (content is not null && _aboutMapper.CanMap(content))
+            var aboutMapper = _contentMapperFactory.CreateMapper<AboutViewModel>();
+
+            if (content is not null && aboutMapper.CanMap(content))
             {
-                aboutViewModel = _aboutMapper.Map(content);
+                aboutViewModel = aboutMapper.Map(content);
             }
 
             return aboutViewModel;
@@ -58,9 +56,11 @@ namespace IceNineMedia.Core.Features.Shared
         {
             HomeViewModel homeViewModel = new();
 
-            if (content is not null && _homeMapper.CanMap(content))
+            var homeMapper = _contentMapperFactory.CreateMapper<HomeViewModel>();
+
+            if (content is not null && homeMapper.CanMap(content))
             {
-                homeViewModel = _homeMapper.Map(content);
+                homeViewModel = homeMapper.Map(content);
             }
 
             return homeViewModel;
@@ -70,9 +70,11 @@ namespace IceNineMedia.Core.Features.Shared
         {
             SiteSettingsViewModel siteSettingsViewModel = new();
 
-            if (content is not null && _siteSettingsMapper.CanMap(content))
+            var siteSettingsMapper = _contentMapperFactory.CreateMapper<SiteSettingsViewModel>();
+
+            if (content is not null && siteSettingsMapper.CanMap(content))
             {
-                siteSettingsViewModel = _siteSettingsMapper.Map(content);
+                siteSettingsViewModel = siteSettingsMapper.Map(content);
             }
 
             return siteSettingsViewModel;
