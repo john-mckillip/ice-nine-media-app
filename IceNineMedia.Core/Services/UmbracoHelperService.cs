@@ -87,8 +87,6 @@ namespace IceNineMedia.Core.Services
 
             if (siteSettingsContent is not null && siteSettingsMapper.CanMap(siteSettingsContent))
             {
-                var test = siteSettingsMapper.Map(siteSettingsContent);
-
                 return siteSettingsMapper.Map(siteSettingsContent);
             }
 
