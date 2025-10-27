@@ -35,22 +35,53 @@ body {
     font-size: 12rem;
 }
 
-.full-width-header .last-name {
-    position: relative;
-    top: 140px;
-    font-size: 12rem;
-    margin-bottom: 20px;
+    .full-width-header .last-name {
+        position: relative;
+        top: 140px;
+        font-size: 12rem;
+        margin-bottom: 20px;
+    }
+
+.main-body-content {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.75rem;
+    text-align: left;
+    margin-top: 200px;
+    font-weight: 300;
+    line-height: 1.4;
+    padding: 0;
+    margin-top: 600px;
 }
 
-/* Responsive font scaling */
+/* New breakpoint for large screens */
+@media (max-width: 1650px) {
+    .full-width-header {
+        font-size: 11rem;
+    }
+
+        .full-width-header .last-name {
+            font-size: 11rem;
+            top: 60px;
+        }
+
+    .main-body-content {
+        margin-top: 120px;
+    }
+}
+
 @media (max-width: 1200px) {
     .full-width-header {
         font-size: 10rem;
     }
 
-    .full-width-header .last-name {
-        font-size: 10rem;
-        top: 8px;
+        .full-width-header .last-name {
+            font-size: 10rem;
+            top: 8px;
+        }
+
+    .main-body-content {
+        font-size: 1.8rem;
+        margin-top: 0px;
     }
 }
 
@@ -59,9 +90,14 @@ body {
         font-size: 8rem;
     }
 
-    .full-width-header .last-name {
-        font-size: 8rem;
-        top: 6px;
+        .full-width-header .last-name {
+            font-size: 8rem;
+            top: 6px;
+        }
+
+    .main-body-content {
+        font-size: 1.6rem;
+        margin-top: 0px;
     }
 }
 
@@ -70,9 +106,15 @@ body {
         font-size: 6rem;
     }
 
-    .full-width-header .last-name {
-        font-size: 6rem;
-        top: 4px;
+        .full-width-header .last-name {
+            font-size: 6rem;
+            top: 4px;
+        }
+
+    .main-body-content {
+        font-size: 1.4rem;
+        margin-top: 0px;
+        text-align: center;
     }
 }
 
@@ -81,9 +123,15 @@ body {
         font-size: 4rem;
     }
 
-    .full-width-header .last-name {
-        font-size: 4rem;
-        top: 2px;
-        display: block;
+        .full-width-header .last-name {
+            font-size: 4rem;
+            top: 2px;
+            display: block;
+        }
+
+    .main-body-content {
+        font-size: 1.2rem;
+        margin-top: 0;
+        text-align: center;
     }
 }

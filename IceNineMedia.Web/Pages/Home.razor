@@ -10,15 +10,20 @@
     private HomeViewModel? homePage = null;
     private bool isInitialized = false;
     private List<string> title = [];
+    private string mainBody = string.Empty;
 
     protected override void OnAfterRender(bool firstRender)
     {
         if (firstRender && !isInitialized)
         {
-            homePage =  UmbracoHelperService.GetHomeContent(ContentSlugs.Home);
+            homePage = UmbracoHelperService.GetHomeContent(ContentSlugs.Home);
             if (homePage is not null && !string.IsNullOrEmpty(homePage?.Title))
             {
                 title = homePage.Title.Split(' ').ToList();
+            }
+            if (homePage is not null && homePage.MainBody is not null)
+            {
+                mainBody = homePage?.MainBody?.ToString() ?? string.Empty;
             }
             isInitialized = true;
             StateHasChanged();
@@ -28,10 +33,18 @@
 
 @if (title.Any())
 {
-    <div class="home-name grid grid-cols-1 mb-8">
-        <h1 class="full-width-header">
-            @title.First() <span class="last-name">@title.Last()</span>
-        </h1>
+    <div class="grid grid-cols-12 gap-0">
+        <div class="col-span-12 mb-4">
+            <h1 class="full-width-header">
+                @title.First() <span class="last-name">@title.Last()</span>
+            </h1>
+        </div>
+
+        @if (!string.IsNullOrEmpty(mainBody))
+        {
+            <div class="col-span-12 col-start-1 lg:col-span-8 lg:col-start-3 main-body-content p-0">
+                @((MarkupString)mainBody)
+            </div>
+        }
     </div>
-    
 }

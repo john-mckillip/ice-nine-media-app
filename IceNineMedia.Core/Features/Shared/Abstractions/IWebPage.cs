@@ -1,4 +1,4 @@
-﻿using System.Web;
+﻿using Microsoft.AspNetCore.Html;
 
 namespace IceNineMedia.Core.Features.Shared.Abstractions
 {
@@ -22,6 +22,6 @@ namespace IceNineMedia.Core.Features.Shared.Abstractions
         /// <summary>
         /// The main body of content for the page
         /// </summary>
-        public IHtmlString? MainBody { get; set; }
+        public IHtmlContent? MainBody { get; set; }
     }
 }

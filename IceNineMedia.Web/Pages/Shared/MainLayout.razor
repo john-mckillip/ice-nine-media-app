@@ -5,7 +5,6 @@
     private string? contactEmail;
     private string? copyrightText;
     private bool isMenuOpen = false;
-    private bool isInitialized = false;
     private bool navigationHasItems = false;
 
     protected override void OnAfterRender(bool firstRender)
@@ -20,7 +19,6 @@
                 copyrightText = siteSettings.Copyright ?? string.Empty;
                 navigationHasItems = siteSettings?.Navigation?.Any() ?? false;
             }
-            isInitialized = true;
             StateHasChanged();
         }
     }
@@ -44,7 +42,7 @@
         {
             <div class="col-span-1 hidden md:flex items-center justify-center md:justify-end">
                 <a rel="noopener noreferrer" target="_blank" aria-label="Say hello @contactEmail" class="text-white" href="mailto:@contactEmail">
-                    Say hello <br><div class="underline underline-offset-12">@contactEmail</div>
+                    Get in touch <br><div class="underline underline-offset-12">@contactEmail</div>
                 </a>
             </div>
         }
