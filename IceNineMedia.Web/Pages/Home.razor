@@ -14,19 +14,19 @@
 
     protected override void OnAfterRender(bool firstRender)
     {
-    if (firstRender && !isInitialized)
+        if (firstRender && !isInitialized)
         {
             homePage = UmbracoHelperService.GetHomeContent(ContentSlugs.Home);
-         if (homePage is not null && !string.IsNullOrEmpty(homePage?.Title))
-{
-      title = homePage.Title.Split(' ').ToList();
-   }
-     if (homePage is not null && homePage.MainBody is not null)
- {
-              mainBody = homePage?.MainBody?.ToString() ?? string.Empty;
-     }
-     isInitialized = true;
-       StateHasChanged();
+            if (homePage is not null && !string.IsNullOrEmpty(homePage?.Title))
+            {
+                title = homePage.Title.Split(' ').ToList();
+            }
+            if (homePage is not null && homePage.MainBody is not null)
+            {
+                mainBody = homePage?.MainBody?.ToString() ?? string.Empty;
+            }
+            isInitialized = true;
+            StateHasChanged();
         }
     }
 }
@@ -34,9 +34,9 @@
 @if (title.Any())
 {
     <div class="mb-4">
-    <h1 class="full-width-header flex justify-between">
-          <span class="title-first">@title.First()</span>
-        <span class="title-last">@title.Last()</span>
+        <h1 class="full-width-header flex justify-between">
+            <span class="title-first">@title.First()</span>
+            <span class="title-last">@title.Last()</span>
         </h1>
     </div>
 
@@ -44,6 +44,6 @@
     {
         <div class="main-body-content p-0">
             @((MarkupString)mainBody)
-  </div>
+        </div>
     }
 }
