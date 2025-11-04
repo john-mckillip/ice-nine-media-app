@@ -7,9 +7,9 @@
     public EventCallback OnCloseMenu { get; set; }
 }
 
-<menu>
+<menu class="mobile-menu-items">
     @foreach (var navItem in Navigation)
     {
-        <li><a class="text-black" target="@navItem.Target" href="@navItem.Url" @onclick="OnCloseMenu">@navItem.Name</a></li>
+        <li class="py-2"><a class="text-white text-xl hover:text-gray-300 transition-colors duration-200" target="@navItem.Target" href="@navItem.Url" @onclick="OnCloseMenu">@navItem.Name</a></li>
     }
 </menu>
