@@ -1,0 +1,28 @@
+﻿@using IceNineMedia.Core.Features.Blocks
+@using Umbraco.Cms.Core.Models.Blocks
+@using UContentMapper.Core.Abstractions.Mapping
+@using static IceNineMedia.Core.Features.Shared.AppConstants
+
+@inject IContentMapperFactory ContentMapperFactory
+
+@code {
+    [Parameter]
+    public BlockListItem? BlockListItem { get; set; }
+}
+
+@if (BlockListItem is not null)
+{
+    switch (BlockListItem.Content.ContentType.Alias)
+    {
+        case ContentTypeAliases.AboutBlock:
+
+            var aboutBlockMapper = ContentMapperFactory.CreateMapper<AboutBlockViewModel>();
+            if (aboutBlockMapper.CanMap(BlockListItem.Content))
+            {
+                var aboutBlockViewModel = aboutBlockMapper.Map(BlockListItem.Content);
+
+                <AboutBlockComponent Model="@aboutBlockViewModel" />
+            }
+            break;
+    }
+}

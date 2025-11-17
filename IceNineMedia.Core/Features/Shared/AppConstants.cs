@@ -5,6 +5,7 @@
         public static class ContentTypeAliases
         {
             public const string About = "about";
+            public const string AboutBlock = "aboutBlock";
             public const string Home = "home";
             public const string SiteSettings = "siteSettings";
 

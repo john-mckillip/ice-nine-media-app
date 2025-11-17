@@ -1,0 +1,13 @@
+﻿@using Umbraco.Cms.Core.Models.Blocks
+@code {
+    [Parameter]
+    public BlockListModel? BlockListItems { get; set; }
+}
+
+@if (BlockListItems is not null)
+{
+    foreach (var item in BlockListItems)
+    {
+       <BlockListItemComponent BlockListItem="@item" />
+    }
+}

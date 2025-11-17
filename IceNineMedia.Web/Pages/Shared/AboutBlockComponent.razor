@@ -1,0 +1,11 @@
+﻿@using IceNineMedia.Core.Features.Blocks
+
+@code {
+    [Parameter]
+    public AboutBlockViewModel? Model { get; set; }
+}
+
+@if (Model is not null)
+{
+    <h3>@Model.Title</h3>
+}

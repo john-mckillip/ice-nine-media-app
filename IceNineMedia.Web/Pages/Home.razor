@@ -2,6 +2,7 @@
 @using IceNineMedia.Core.Features.Home
 @using IceNineMedia.Core.Features.Shared
 @using IceNineMedia.Core.Features.Shared.Abstractions
+@using IceNineMedia.Web.Pages.Shared
 @using static IceNineMedia.Core.Features.Shared.AppConstants
 
 @inject IUmbracoHelperService UmbracoHelperService
@@ -46,4 +47,9 @@
             @((MarkupString)mainBody)
         </div>
     }
+}
+
+@if (homePage is not null && homePage.ContentBlocks is not null)
+{
+    <BlockListComponent BlockListItems="homePage.ContentBlocks" />
 }
