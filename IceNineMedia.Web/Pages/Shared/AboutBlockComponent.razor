@@ -2,10 +2,46 @@
 
 @code {
     [Parameter]
-    public AboutBlockViewModel? Model { get; set; }
+    public AboutBlockViewModel? Model { get; set; } 
+
+    private bool isInitialized = false;
+    private string mainBody = string.Empty;
+    private string teaser = string.Empty;
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender && !isInitialized)
+        {
+            mainBody = Model?.MainBody?.ToString() ?? string.Empty;
+            teaser = Model?.Teaser?.ToString() ?? string.Empty;
+            isInitialized = true;
+            StateHasChanged();
+        }
+    }
 }
 
 @if (Model is not null)
 {
-    <h3>@Model.Title</h3>
+    <div id="section-about">
+        @if (!string.IsNullOrEmpty(Model.Title))
+        {
+            <h3>@Model.Title</h3>
+            <hr />
+        }
+       
+        @if (Model.Teaser is not null)
+        {
+            <div id="teaser">
+                @((MarkupString)teaser)
+            </div>
+        }
+
+        @if (Model.MainBody is not null)
+        {
+            <div id="main-body">
+                @((MarkupString)mainBody)
+            </div>
+        }
+       
+    </div>
 }

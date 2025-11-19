@@ -45,9 +45,9 @@ body {
     gap: 1rem;
 }
 
-    .mobile-menu-items li {
-        list-style: none;
-    }
+.mobile-menu-items li {
+    list-style: none;
+}
 
 /* Title Styles */
 .full-width-header {
