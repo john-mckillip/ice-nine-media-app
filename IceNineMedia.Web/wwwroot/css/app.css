@@ -28,7 +28,6 @@ body {
     background-color: #ffffff;
 }
 
-/* Mobile Menu Styles */
 .hamburger-icon.before\:bg-black::before,
 .hamburger-icon.after\:bg-black::after {
     background-color: #000000;
@@ -49,7 +48,6 @@ body {
     list-style: none;
 }
 
-/* Title Styles */
 .full-width-header {
     width: 100%;
     color: black;
@@ -58,7 +56,7 @@ body {
     justify-content: space-between;
     align-items: flex-start;
     padding: 0;
-    margin-top: 150px;
+    margin-top: 120px;
 }
 
 .title-first {
@@ -68,24 +66,63 @@ body {
 .title-last {
     text-align: right;
     position: relative;
-    top: 200px;
-    margin-bottom: 160px;
+    top: 180px;
+    margin-bottom: 60px;
 }
 
 .main-body-content {
     color: black;
-    font-size: 2rem;
+    font-size: 1.7rem;
     text-align: left;
-    margin-top: 200px;
+    margin-top: 80px;
+    margin-bottom: 60px;
     font-weight: 300;
-    line-height: 1.4;
-    padding: 0;
+    line-height: 1.6;
+    padding-top: 18rem;
+    padding-bottom: 10rem;
+    max-width: 50%;
 }
 
-/* Media Queries */
+#section-about {
+    padding-top: 2.5rem;
+    padding-bottom: 5rem;
+}
+
+#section-about h3 {
+    font-size: 3.5rem;
+    line-height: 1.1;
+    margin-bottom: 1.25rem;
+}
+
+#section-about #teaser {
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 1.6;
+    margin-bottom: 1.75rem;
+}
+
+#section-about ul {
+    margin-top: 4rem;
+}
+
+#section-about ul li {
+    margin-bottom: 1rem;
+}
+
+#section-about ul li a {
+    font-size: 1.2rem;
+}
+
+#section-about #main-body {
+    font-size: 1.4rem;
+    font-weight: 300;
+    line-height: 1.7;
+}
+
 @media (max-width: 2000px) {
     .full-width-header {
         font-size: 10rem;
+        margin-top: 110px;
     }
 
     .title-first,
@@ -94,19 +131,35 @@ body {
     }
 
     .title-last {
-        top: 180px;
-        margin-bottom: 140px;
+        top: 160px;
+        margin-bottom: 50px;
     }
 
     .main-body-content {
-        margin-top: 120px;
+        font-size: 1.6rem;
+        margin-top: 70px;
+        margin-bottom: 50px;
+        padding-top: 14rem;
+        max-width: 55%;
+    }
+
+    #section-about {
+        padding-top: 2.25rem;
+    }
+
+    #section-about #teaser {
+        font-size: 1.9rem;
+    }
+
+    #section-about #main-body {
+        font-size: 1.35rem;
     }
 }
 
 @media (max-width: 1500px) {
     .full-width-header {
         font-size: 9rem;
-        margin-top: 50px;
+        margin-top: 40px;
     }
 
     .title-first,
@@ -115,34 +168,75 @@ body {
     }
 
     .title-last {
-        top: 160px;
-        margin-bottom: 120px;
+        top: 140px;
+        margin-bottom: 40px;
     }
 
     .main-body-content {
+        font-size: 1.5rem;
+        margin-top: 60px;
+        margin-bottom: 45px;
+        padding-top: 10rem;
+        max-width: 60%;
+    }
+
+    #section-about {
+        padding-top: 2rem;
+        padding-bottom: 3.5rem;
+    }
+
+    #section-about h3 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    #section-about #teaser {
         font-size: 1.8rem;
-        margin-top: 80px;
+        margin-bottom: 1.5rem;
+    }
+
+    #section-about #main-body {
+        font-size: 1.3rem;
+    }
+
+    #section-about ul li a {
+        font-size: 1.1rem;
     }
 }
 
 @media (max-width: 1300px) {
     .full-width-header {
         font-size: 7rem;
+        margin-top: 30px;
     }
 
     .title-first,
     .title-last {
         font-size: 7rem;
-    }
-
-    .title-last {
-        top: 140px;
-        margin-bottom: 100px;
+        top: 120px;
+        margin-bottom: 35px;
     }
 
     .main-body-content {
+        font-size: 1.4rem;
+        margin-top: 50px;
+        margin-bottom: 40px;
+        padding-top: 6rem;
+        max-width: 70%;
+    }
+
+    #section-about h3 {
+        font-size: 2.5rem;
+        margin-bottom: 0.9rem;
+    }
+
+    #section-about #teaser {
         font-size: 1.6rem;
-        margin-top: 60px;
+        margin-bottom: 1.3rem;
+    }
+
+    #section-about #main-body {
+        font-size: 1.25rem;
     }
 }
 
@@ -152,63 +246,131 @@ body {
         align-items: center;
         justify-content: center;
         gap: 1rem;
+        margin-top: 30px;
     }
 
     .title-first,
     .title-last {
         font-size: 5rem;
-    }
-
-    .title-last {
-        top: 0;
-        margin-bottom: 0px;
+        position: static;
+        margin-bottom: 0;
     }
 
     .main-body-content {
-        font-size: 1.4rem;
-        margin-top: 40px;
-        text-align: center;
+        font-size: 1.3rem;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        padding-top: 2.5rem;
+        padding-bottom: 2.5rem;
+        text-align: left;
+        max-width: 100%;
+    }
+
+    #section-about {
+        padding-top: 1.75rem;
+        padding-bottom: 3rem;
+    }
+
+    #section-about h3 {
+        font-size: 2.25rem;
+        margin-bottom: 0.9rem;
+    }
+
+    #section-about #teaser {
+        font-size: 1.5rem;
+        margin-bottom: 1.15rem;
+    }
+
+    #section-about #main-body {
+        font-size: 1.15rem;
+    }
+
+    #section-about ul {
+        margin-top: 1.75rem;
+    }
+
+    #section-about ul li a {
+        font-size: 1rem;
     }
 }
 
 @media (max-width: 576px) {
     .full-width-header {
-        font-size: 3rem;
-        justify-content: center;
-        gap: 0.75rem;
+        font-size: 2.25rem;
+        display: block;
+        text-align: left;
+        margin-top: 32px;
     }
 
     .title-first,
     .title-last {
-        font-size: 3rem;
-    }
-
-    .title-last {
-        top: 0;
-        margin-bottom: 0px;
+        font-size: inherit;
+        display: inline;
+        position: static;
+        margin: 0;
     }
 
     .main-body-content {
-        font-size: 1.2rem;
-        margin-top: 30px;
-        text-align: center;
+        font-size: 1.05rem;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        padding-top: 1.25rem;
+        padding-bottom: 1.25rem;
+        text-align: left;
+        max-width: 100%;
+    }
+
+    #section-about {
+        padding-top: 1.25rem;
+        padding-bottom: 1.75rem;
+    }
+
+    #section-about h3 {
+        font-size: 1.75rem;
+        margin-bottom: 0.6rem;
+    }
+
+    #section-about #teaser {
+        font-size: 1.25rem;
+        margin-bottom: 0.9rem;
+    }
+
+    #section-about #main-body {
+        font-size: 1rem;
+    }
+
+    #section-about ul {
+        margin-top: 1.25rem;
+    }
+
+    #section-about ul li a {
+        font-size: 0.95rem;
     }
 }
 
 @media (max-width: 400px) {
     .full-width-header {
-        font-size: 2.5rem;
+        font-size: 2rem;
         margin-top: 20px;
-        gap: 0.5rem;
     }
 
-    .title-first,
-    .title-last {
-        font-size: 2.5rem;
+    .main-body-content {
+        font-size: 1rem;
+        margin-top: 16px;
+        margin-bottom: 16px;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
     }
 
-    .title-last {
-        top: 0;
-        margin-bottom: 0px;
+    #section-about h3 {
+        font-size: 1.5rem;
+    }
+
+    #section-about #teaser {
+        font-size: 1.15rem;
+    }
+
+    #section-about #main-body {
+        font-size: 0.95rem;
     }
 }

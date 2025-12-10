@@ -34,19 +34,21 @@
 
 @if (title.Any())
 {
-    <div class="mb-4">
-        <h1 class="full-width-header flex justify-between">
-            <span class="title-first">@title.First()</span>
-            <span class="title-last">@title.Last()</span>
-        </h1>
-    </div>
-
-    @if (!string.IsNullOrEmpty(mainBody))
-    {
-        <div class="main-body-content p-0">
-            @((MarkupString)mainBody)
+    <div id="section-intro">
+        <div class="mb-4">
+            <h1 class="full-width-header flex justify-between">
+                <span class="title-first">@title.First()</span>
+                <span class="title-last">@title.Last()</span>
+            </h1>
         </div>
-    }
+
+        @if (!string.IsNullOrEmpty(mainBody))
+        {
+            <div class="main-body-content p-0">
+                @((MarkupString)mainBody)
+            </div>
+        }
+    </div>
 }
 
 @if (homePage is not null && homePage.ContentBlocks is not null)

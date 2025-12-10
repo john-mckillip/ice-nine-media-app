@@ -22,26 +22,43 @@
 
 @if (Model is not null)
 {
-    <div id="section-about">
+    <div id="section-about" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         @if (!string.IsNullOrEmpty(Model.Title))
         {
-            <h3>@Model.Title</h3>
-            <hr />
-        }
-       
-        @if (Model.Teaser is not null)
-        {
-            <div id="teaser">
-                @((MarkupString)teaser)
+            <div class="col-span-1 lg:col-span-2 mb-4">
+                <h3>@Model.Title</h3>
+                <hr />
             </div>
         }
 
+        <div class="col-span-1 space-y-4">
+            @if (Model.Teaser is not null)
+            {
+                <div id="teaser">
+                    @((MarkupString)teaser)
+                </div>
+            }
+
+            @if (Model.Links is not null && Model.Links.Any())
+            {
+                <ul class="space-y-2">
+                    @foreach (var link in Model.Links)
+                    {
+                        <li>
+                            <a href="@link.Url" target="@link.Target" class="underline">
+                                @link.Name
+                            </a>
+                        </li>
+                    }
+                </ul>
+            }
+        </div>
+
         @if (Model.MainBody is not null)
         {
-            <div id="main-body">
+            <div id="main-body" class="col-span-1">
                 @((MarkupString)mainBody)
             </div>
         }
-       
     </div>
 }
