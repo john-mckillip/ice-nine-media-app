@@ -16,6 +16,7 @@
     <PackageReference Include="Microsoft.ICU.ICU4C.Runtime" Version="72.1.0.3" />
     <PackageReference Include="Umbraco.Cms.Core" Version="15.4.2" />
     <PackageReference Include="Umbraco.Cms.Web.Common" Version="15.4.2" />
+    <PackageReference Include="uSync" Version="15.1.9" />
     <ProjectReference Include="..\IceNineMedia.Core\IceNineMedia.Core.csproj" />
     <RuntimeHostConfigurationOption Include="System.Globalization.AppLocalIcu" Value="72.1.0.3" Condition="$(RuntimeIdentifier.StartsWith('linux')) or $(RuntimeIdentifier.StartsWith('win')) or ('$(RuntimeIdentifier)' == '' and !$([MSBuild]::IsOSPlatform('osx')))" />
   </ItemGroup>
