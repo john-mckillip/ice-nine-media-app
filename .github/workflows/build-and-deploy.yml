@@ -1,0 +1,75 @@
+name: Build and Deploy to FTP
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  DOTNET_VERSION: '9.0.x'
+  PROJECT_PATH: 'IceNineMedia.Web/IceNineMedia.Web.csproj'
+  PUBLISH_OUTPUT_PATH: './publish'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        path: ice-nine-media-app
+        
+    - name: Checkout UContentMapper
+      uses: actions/checkout@v4
+      with:
+        repository: john-mckillip/UContentMapper
+        path: UContentMapper
+        
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+        
+    - name: Restore dependencies
+      run: dotnet restore ${{ env.PROJECT_PATH }}
+      working-directory: ./ice-nine-media-app
+      
+    - name: Build
+      run: dotnet build ${{ env.PROJECT_PATH }} --configuration Release --no-restore
+      working-directory: ./ice-nine-media-app
+      
+    - name: Run tests
+      run: dotnet test --configuration Release --no-build --verbosity normal
+      working-directory: ./ice-nine-media-app
+      continue-on-error: true
+      
+    - name: Publish
+      run: dotnet publish ${{ env.PROJECT_PATH }} --configuration Release --no-build --output ${{ env.PUBLISH_OUTPUT_PATH }}
+      working-directory: ./ice-nine-media-app
+      
+    - name: Update production connection string
+      env: 
+        CONNECTIONSTRING: ${{ secrets.UMBRACO_CONNECTION_STRING }}
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      run: |
+        sed -i 's|PLACEHOLDER_PRODUCTION_CONNECTION_STRING|'"$CONNECTIONSTRING"'|g' ice-nine-media-app/${{ env.PUBLISH_OUTPUT_PATH }}/appsettings.Production.json
+      shell: bash
+      
+    - name: Deploy to FTP
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: ice-nine-media-app/${{ env.PUBLISH_OUTPUT_PATH }}/
+        server-dir: /
+        dangerous-clean-slate: false
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/appsettings.Development.json
+          **/appsettings.*.json
