@@ -20,7 +20,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       with:
-        submodules: true
+        path: ice-nine-media-app
+        
+    - name: Checkout UContentMapper
+      uses: actions/checkout@v4
+      with:
+        repository: john-mckillip/UContentMapper
+        path: UContentMapper
         
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
@@ -29,21 +35,25 @@ jobs:
         
     - name: Restore dependencies
       run: dotnet restore ${{ env.PROJECT_PATH }}
+      working-directory: ./ice-nine-media-app
       
     - name: Build
       run: dotnet build ${{ env.PROJECT_PATH }} --configuration Release --no-restore
+      working-directory: ./ice-nine-media-app
       
     - name: Run tests
       run: dotnet test --configuration Release --no-build --verbosity normal
+      working-directory: ./ice-nine-media-app
       continue-on-error: true
       
     - name: Publish
       run: dotnet publish ${{ env.PROJECT_PATH }} --configuration Release --no-build --output ${{ env.PUBLISH_OUTPUT_PATH }}
+      working-directory: ./ice-nine-media-app
       
     - name: Update production connection string
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       run: |
-        sed -i 's|PLACEHOLDER_PRODUCTION_CONNECTION_STRING|${{ secrets.UMBRACO_CONNECTION_STRING }}|g' ${{ env.PUBLISH_OUTPUT_PATH }}/appsettings.Production.json
+        sed -i 's|PLACEHOLDER_PRODUCTION_CONNECTION_STRING|${{ secrets.UMBRACO_CONNECTION_STRING }}|g' ice-nine-media-app/${{ env.PUBLISH_OUTPUT_PATH }}/appsettings.Production.json
       shell: bash
       
     - name: Deploy to FTP
@@ -53,7 +63,7 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ${{ env.PUBLISH_OUTPUT_PATH }}/
+        local-dir: ice-nine-media-app/${{ env.PUBLISH_OUTPUT_PATH }}/
         server-dir: /
         dangerous-clean-slate: false
         exclude: |
