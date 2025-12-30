@@ -55,7 +55,8 @@ jobs:
         CONNECTIONSTRING: ${{ secrets.UMBRACO_CONNECTION_STRING }}
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       run: |
-        sed -i 's|PLACEHOLDER_PRODUCTION_CONNECTION_STRING|'"$CONNECTIONSTRING"'|g' ice-nine-media-app/${{ env.PUBLISH_OUTPUT_PATH }}/appsettings.Production.json
+        cd ice-nine-media-app/${{ env.PUBLISH_OUTPUT_PATH }}
+        sed -i 's|"umbracoDbDSN": ""|"umbracoDbDSN": "'"$CONNECTIONSTRING"'"|g' appsettings.json
       shell: bash
       
     - name: Deploy to FTP
