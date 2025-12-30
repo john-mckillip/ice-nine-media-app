@@ -51,9 +51,11 @@ jobs:
       working-directory: ./ice-nine-media-app
       
     - name: Update production connection string
+      env: 
+        CONNECTIONSTRING: ${{ secrets.UMBRACO_CONNECTION_STRING }}
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       run: |
-        sed -i 's|PLACEHOLDER_PRODUCTION_CONNECTION_STRING|${{ secrets.UMBRACO_CONNECTION_STRING }}|g' ice-nine-media-app/${{ env.PUBLISH_OUTPUT_PATH }}/appsettings.Production.json
+        sed -i 's|PLACEHOLDER_PRODUCTION_CONNECTION_STRING|'"$CONNECTIONSTRING"'|g' ice-nine-media-app/${{ env.PUBLISH_OUTPUT_PATH }}/appsettings.Production.json
       shell: bash
       
     - name: Deploy to FTP
