@@ -11,7 +11,7 @@
     "tailwindcss": "^3.4.17"
   },
   "scripts": {
-    "build:css": "postcss wwwroot/css/app.css -o wwwroot/css/output.css --watch",
-    "watch:css": "nodemon --ext razor,cshtml,css --watch Pages --watch wwwroot/css --exec \"npm run build:css\""
+    "build:css": "postcss wwwroot/css/app.css -o wwwroot/css/output.css",
+    "watch:css": "nodemon --ext razor,cshtml,css --watch Pages --watch wwwroot/css --exec \"postcss wwwroot/css/app.css -o wwwroot/css/output.css\""
   }
 }

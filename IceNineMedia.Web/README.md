@@ -34,3 +34,17 @@ CSS files, or other relevant files, you can use the following command: npm run w
 - Ensure your browser is not caching the CSS during development. You can append a query string to the CSS file reference in your HTML, like so:
 
 <link href="css/output.css?v=@DateTime.UtcNow.Ticks" rel="stylesheet">
+
+### Building CSS for Production
+
+To build the CSS once without watching for changes (useful for CI/CD pipelines), run: npm run build:css
+
+#### Prerequisites:
+
+- Ensure all dependencies are installed by running: npm install
+
+#### Usage:
+
+1. Open a terminal in the `IceNineMedia.Web` directory.
+2. Run the command: npm run build:css
+3. The command will generate the `wwwroot/css/output.css` file for production use.
