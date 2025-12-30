@@ -41,7 +41,7 @@ jobs:
         cache-dependency-path: ice-nine-media-app/IceNineMedia.Web/package-lock.json
         
     - name: Install npm dependencies
-      run: npm ci
+      run: npm ci --ignore-scripts
       working-directory: ./ice-nine-media-app/IceNineMedia.Web
       
     - name: Build Tailwind CSS
