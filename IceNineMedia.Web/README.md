@@ -31,6 +31,7 @@ CSS files, or other relevant files, you can use the following command: npm run w
 #### Notes:
 
 - The `output.css` file is ignored in version control (`.gitignore`) to avoid unnecessary merge conflicts.
+- The `package-lock.json` file is committed to the repository to ensure consistent builds across environments and enable faster CI/CD builds with dependency caching.
 - Ensure your browser is not caching the CSS during development. You can append a query string to the CSS file reference in your HTML, like so:
 
 <link href="css/output.css?v=@DateTime.UtcNow.Ticks" rel="stylesheet">

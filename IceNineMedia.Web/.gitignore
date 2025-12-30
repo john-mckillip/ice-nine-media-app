@@ -481,4 +481,3 @@ umbraco-package-schema.json
 # Media files
 /wwwroot/media/
 /appsettings.Development.json
-/package-lock.json
