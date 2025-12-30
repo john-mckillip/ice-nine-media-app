@@ -49,4 +49,72 @@ jobs:
       working-directory: ./ice-nine-media-app/IceNineMedia.Web
       
     - name: Restore dependencies
-      run: doten
+      run: dotnet restore ${{ env.PROJECT_PATH }}
+      working-directory: ./ice-nine-media-app
+      
+    - name: Build
+      run: dotnet build ${{ env.PROJECT_PATH }} --configuration Release --no-restore
+      working-directory: ./ice-nine-media-app
+      
+    - name: Run tests
+      run: dotnet test --configuration Release --no-build --verbosity normal
+      working-directory: ./ice-nine-media-app
+      continue-on-error: true
+      
+    - name: Publish
+      run: dotnet publish ${{ env.PROJECT_PATH }} --configuration Release --no-build --output ${{ env.PUBLISH_OUTPUT_PATH }}
+      working-directory: ./ice-nine-media-app
+      
+    - name: Update production connection string
+      env: 
+        CONNECTIONSTRING: ${{ secrets.UMBRACO_CONNECTION_STRING }}
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      run: |
+        cd ice-nine-media-app/${{ env.PUBLISH_OUTPUT_PATH }}
+        sed -i 's|"umbracoDbDSN": ""|"umbracoDbDSN": "'"$CONNECTIONSTRING"'"|g' appsettings.json
+      shell: bash
+      
+    - name: Upload app_offline.htm to stop application
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      continue-on-error: true
+      run: |
+        echo "Uploading app_offline.htm to stop the application..."
+        curl -T ice-nine-media-app/IceNineMedia.Web/app_offline.htm --user "$FTP_USER:$FTP_PASS" --ftp-ssl "ftp://$FTP_SERVER/app_offline.htm"
+        echo "Waiting for application to stop..."
+        sleep 10
+      shell: bash
+      env:
+        FTP_SERVER: ${{ secrets.FTP_SERVER }}
+        FTP_USER: ${{ secrets.FTP_USERNAME }}
+        FTP_PASS: ${{ secrets.FTP_PASSWORD }}
+      
+    - name: Deploy to FTP
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        protocol: ftps
+        local-dir: ice-nine-media-app/${{ env.PUBLISH_OUTPUT_PATH }}/
+        server-dir: /
+        dangerous-clean-slate: false
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/appsettings.Development.json
+          **/appsettings.*.json
+          **/app_offline.htm
+    
+    - name: Remove app_offline.htm to restart application
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      continue-on-error: true
+      run: |
+        echo "Removing app_offline.htm to restart the application..."
+        curl --user "$FTP_USER:$FTP_PASS" --ftp-ssl "ftp://$FTP_SERVER/" -Q "DELE app_offline.htm"
+        echo "Application restarted successfully!"
+      shell: bash
+      env:
+        FTP_SERVER: ${{ secrets.FTP_SERVER }}
+        FTP_USER: ${{ secrets.FTP_USERNAME }}
+        FTP_PASS: ${{ secrets.FTP_PASSWORD }}
