@@ -24,5 +24,17 @@
                 <AboutBlockComponent Model="@aboutBlockViewModel" />
             }
             break;
+
+        case ContentTypeAliases.TechnologiesBlock:
+
+            var technologiesBlockMapper = ContentMapperFactory.CreateMapper<TechnologiesBlockViewModel>();
+            if (technologiesBlockMapper.CanMap(BlockListItem.Content))
+            {
+                var technologiesBlockViewModel = technologiesBlockMapper.Map(BlockListItem.Content);
+
+                <TechnologiesBlockComponent Model="@technologiesBlockViewModel" />
+            }
+
+            break;
     }
 }
