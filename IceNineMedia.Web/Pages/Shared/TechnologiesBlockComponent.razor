@@ -1,0 +1,32 @@
+﻿@using IceNineMedia.Core.Features.Blocks
+
+@code {
+    [Parameter]
+    public TechnologiesBlockViewModel? Model { get; set; }
+
+    private bool isInitialized = false;
+    private string mainBody = string.Empty;
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender && !isInitialized)
+        {
+            mainBody = Model?.MainBody?.ToString() ?? string.Empty;
+            isInitialized = true;
+            StateHasChanged();
+        }
+    }
+}
+
+@if (Model is not null)
+{
+    <div id="section-tech" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        @if (!string.IsNullOrEmpty(Model.Title))
+        {
+            <div class="col-span-1 lg:col-span-2 mb-4">
+                <h3>@Model.Title</h3>
+                <hr />
+            </div>
+        }
+    </div>
+}
