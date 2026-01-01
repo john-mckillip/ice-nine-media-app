@@ -48,6 +48,33 @@ body {
     list-style: none;
 }
 
+/* Typewriter Effect Styles */
+.typewriter-container {
+    display: block;
+    min-height: 3rem;
+    text-align: center;
+}
+
+.typewriter-text {
+    display: inline-block;
+    border-right: .15em solid orange;
+    white-space: nowrap;
+    letter-spacing: .15em;
+    font-size: 2rem;
+    font-weight: 600;
+    color: black;
+    animation: blink-caret .75s step-end infinite;
+}
+
+.typewriter-text.typing {
+    animation: blink-caret .75s step-end infinite;
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: orange; }
+}
+
 .full-width-header {
     width: 100%;
     color: black;
@@ -83,15 +110,25 @@ body {
     max-width: 50%;
 }
 
-#section-about {
+/* Shared section styles for about and tech sections */
+#section-about,
+#section-tech {
     padding-top: 2.5rem;
     padding-bottom: 5rem;
 }
 
-#section-about h3 {
+#section-about h3,
+#section-tech h3 {
     font-size: 3.5rem;
     line-height: 1.1;
     margin-bottom: 1.25rem;
+}
+
+#section-about #main-body,
+#section-tech #main-body {
+    font-size: 1.4rem;
+    font-weight: 300;
+    line-height: 1.7;
 }
 
 #section-about #teaser {
@@ -111,12 +148,6 @@ body {
 
 #section-about ul li a {
     font-size: 1.2rem;
-}
-
-#section-about #main-body {
-    font-size: 1.4rem;
-    font-weight: 300;
-    line-height: 1.7;
 }
 
 @media (max-width: 2000px) {
@@ -143,7 +174,8 @@ body {
         max-width: 55%;
     }
 
-    #section-about {
+    #section-about,
+    #section-tech {
         padding-top: 2.25rem;
     }
 
@@ -151,8 +183,13 @@ body {
         font-size: 1.9rem;
     }
 
-    #section-about #main-body {
+    #section-about #main-body,
+    #section-tech #main-body {
         font-size: 1.35rem;
+    }
+    
+    .typewriter-text {
+        font-size: 1.9rem;
     }
 }
 
@@ -180,12 +217,14 @@ body {
         max-width: 60%;
     }
 
-    #section-about {
+    #section-about,
+    #section-tech {
         padding-top: 2rem;
         padding-bottom: 3.5rem;
     }
 
-    #section-about h3 {
+    #section-about h3,
+    #section-tech h3 {
         font-size: 3rem;
         margin-bottom: 1rem;
     }
@@ -195,12 +234,17 @@ body {
         margin-bottom: 1.5rem;
     }
 
-    #section-about #main-body {
+    #section-about #main-body,
+    #section-tech #main-body {
         font-size: 1.3rem;
     }
 
     #section-about ul li a {
         font-size: 1.1rem;
+    }
+    
+    .typewriter-text {
+        font-size: 1.8rem;
     }
 }
 
@@ -225,7 +269,8 @@ body {
         max-width: 70%;
     }
 
-    #section-about h3 {
+    #section-about h3,
+    #section-tech h3 {
         font-size: 2.5rem;
         margin-bottom: 0.9rem;
     }
@@ -235,8 +280,13 @@ body {
         margin-bottom: 1.3rem;
     }
 
-    #section-about #main-body {
+    #section-about #main-body,
+    #section-tech #main-body {
         font-size: 1.25rem;
+    }
+    
+    .typewriter-text {
+        font-size: 1.6rem;
     }
 }
 
@@ -266,12 +316,14 @@ body {
         max-width: 100%;
     }
 
-    #section-about {
+    #section-about,
+    #section-tech {
         padding-top: 1.75rem;
         padding-bottom: 3rem;
     }
 
-    #section-about h3 {
+    #section-about h3,
+    #section-tech h3 {
         font-size: 2.25rem;
         margin-bottom: 0.9rem;
     }
@@ -281,7 +333,8 @@ body {
         margin-bottom: 1.15rem;
     }
 
-    #section-about #main-body {
+    #section-about #main-body,
+    #section-tech #main-body {
         font-size: 1.15rem;
     }
 
@@ -291,6 +344,10 @@ body {
 
     #section-about ul li a {
         font-size: 1rem;
+    }
+    
+    .typewriter-text {
+        font-size: 1.5rem;
     }
 }
 
@@ -320,12 +377,14 @@ body {
         max-width: 100%;
     }
 
-    #section-about {
+    #section-about,
+    #section-tech {
         padding-top: 1.25rem;
         padding-bottom: 1.75rem;
     }
 
-    #section-about h3 {
+    #section-about h3,
+    #section-tech h3 {
         font-size: 1.75rem;
         margin-bottom: 0.6rem;
     }
@@ -335,7 +394,8 @@ body {
         margin-bottom: 0.9rem;
     }
 
-    #section-about #main-body {
+    #section-about #main-body,
+    #section-tech #main-body {
         font-size: 1rem;
     }
 
@@ -345,6 +405,15 @@ body {
 
     #section-about ul li a {
         font-size: 0.95rem;
+    }
+    
+    .typewriter-text {
+        font-size: 1.25rem;
+        letter-spacing: .1em;
+    }
+    
+    .typewriter-container {
+        min-height: 2rem;
     }
 }
 
@@ -362,7 +431,8 @@ body {
         padding-bottom: 1rem;
     }
 
-    #section-about h3 {
+    #section-about h3,
+    #section-tech h3 {
         font-size: 1.5rem;
     }
 
@@ -370,7 +440,13 @@ body {
         font-size: 1.15rem;
     }
 
-    #section-about #main-body {
+    #section-about #main-body,
+    #section-tech #main-body {
         font-size: 0.95rem;
+    }
+    
+    .typewriter-text {
+        font-size: 1.15rem;
+        letter-spacing: .08em;
     }
 }
