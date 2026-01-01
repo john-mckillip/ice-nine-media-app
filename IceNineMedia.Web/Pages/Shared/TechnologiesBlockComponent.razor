@@ -22,7 +22,10 @@
     {
         if (firstRender && Model?.Technologies.Any() == true)
         {
-            var techArray = Model.Technologies.ToArray();
+            var techArray = Model.Technologies
+                .OrderBy(_ => Random.Shared.Next())
+                .ToArray();
+            
             System.Diagnostics.Debug.WriteLine($"Technologies count: {techArray.Length}");
             foreach (var tech in techArray)
             {
