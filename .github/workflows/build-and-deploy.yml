@@ -61,6 +61,12 @@ jobs:
       working-directory: ./ice-nine-media-app
       continue-on-error: true
       
+    - name: SonarQube Scan
+      uses: SonarSource/sonarqube-scan-action@v6
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      
     - name: Publish
       run: dotnet publish ${{ env.PROJECT_PATH }} --configuration Release --no-build --output ${{ env.PUBLISH_OUTPUT_PATH }}
       working-directory: ./ice-nine-media-app
