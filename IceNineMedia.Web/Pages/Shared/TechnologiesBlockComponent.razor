@@ -1,4 +1,5 @@
 ﻿@using IceNineMedia.Core.Features.Blocks
+@inject IJSRuntime JS
 
 @code {
     [Parameter]
@@ -16,16 +17,44 @@
             StateHasChanged();
         }
     }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && Model?.Technologies.Any() == true)
+        {
+            var techArray = Model.Technologies.ToArray();
+            System.Diagnostics.Debug.WriteLine($"Technologies count: {techArray.Length}");
+            foreach (var tech in techArray)
+            {
+                System.Diagnostics.Debug.WriteLine($"Technology: {tech}");
+            }
+            await JS.InvokeVoidAsync("initTypewriter", (object)techArray);
+        }
+    }
 }
 
 @if (Model is not null)
 {
-    <div id="section-tech" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div id="section-tech" class="grid grid-cols-1 gap-8">
         @if (!string.IsNullOrEmpty(Model.Title))
         {
-            <div class="col-span-1 lg:col-span-2 mb-4">
+            <div class="col-span-1 mb-4">
                 <h3>@Model.Title</h3>
                 <hr />
+            </div>
+        }
+        @if (Model.MainBody is not null)
+        {
+            <div id="main-body" class="col-span-1">
+                @((MarkupString)mainBody)
+            </div>
+        }
+        @if (Model.Technologies.Any())
+        {
+            <div class="col-span-1 w-full text-center">
+                <div class="typewriter-container">
+                    <span class="typewriter-text" id="typewriter-text" style="display: inline-block; min-width: 0;"></span>
+                </div>
             </div>
         }
     </div>
