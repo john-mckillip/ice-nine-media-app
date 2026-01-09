@@ -1,0 +1,40 @@
+version: "3.9"
+
+services:
+  db:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    container_name: ice-nine-media-sql
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Your_Strong_SA_Password123!"
+    ports:
+      - "1433:1433"
+    volumes:
+      - umbraco_sqldata:/var/opt/mssql
+    healthcheck:
+      test: [ "CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P GeekLove!43 -Q 'SELECT 1' || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  web:
+    build:
+      context: .
+      dockerfile: IceNineMedia.Web/Dockerfile
+      target: dev
+    container_name: ice-nine-media-web
+    ports:
+      - "8080:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__umbracoDbDSN: "Server=db,1433;Database=UmbracoDev;User Id=sa;Password=GeekLove!43;TrustServerCertificate=true;"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - .:/src
+      - umbraco_data:/src/IceNineMedia.Web/umbraco
+      - ../UContentMapper:/UContentMapper
+volumes:
+  umbraco_sqldata:
+  umbraco_data:

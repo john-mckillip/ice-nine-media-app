@@ -6,6 +6,37 @@ An evolving web application for my personal website that leverages the following
 - Blazor
 - Tailwind CSS
 
+## Running Locally with Docker
+
+### Prerequisites
+
+- Docker Desktop installed and running
+
+### Steps
+
+1. From the solution root directory (where `docker-compose.yml` lives), run:
+
+   ```bash
+   docker compose up --build
+   ```
+
+2. Open a browser and navigate to:
+   - `http://localhost:8080` – Application
+   - `http://localhost:8080/umbraco` – Umbraco backoffice (complete the installer on first run)
+
+3. To stop the containers:
+
+   ```bash
+   docker compose down
+   ```
+
+4. To reset the local SQL database and Umbraco data (fresh install):
+
+   ```bash
+   docker compose down -v
+   docker compose up --build
+   ```
+
 ## Development Workflow
 
 ### Watching for CSS Changes
