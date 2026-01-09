@@ -2,7 +2,9 @@ name: Build and Deploy to FTP
 
 on:
   push:
-    branches: [ main ]
+    branches: 
+      - main
+      - 'feature/**'
   pull_request:
     branches: [ main ]
   workflow_dispatch:
@@ -61,7 +63,16 @@ jobs:
       working-directory: ./ice-nine-media-app
       continue-on-error: true
       
+    - name: SonarQube Scan
+      uses: SonarSource/sonarqube-scan-action@v6
+      with:
+        projectBaseDir: ice-nine-media-app
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      
     - name: Publish
+      if: github.ref == 'refs/heads/main'
       run: dotnet publish ${{ env.PROJECT_PATH }} --configuration Release --no-build --output ${{ env.PUBLISH_OUTPUT_PATH }}
       working-directory: ./ice-nine-media-app
       

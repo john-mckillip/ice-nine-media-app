@@ -8,6 +8,7 @@
             public const string AboutBlock = "aboutBlock";
             public const string Home = "home";
             public const string SiteSettings = "siteSettings";
+            public const string TechnologiesBlock = "technologiesBlock";
 
         }
 
